@@ -11,6 +11,7 @@ Generative AI and Large Language Models  https://brightspace.ucd.ie/d2l/le/conte
 
 
 ### Pitch Choice 1 - Sentiment Analysis For Fake News Detection
+https://arc.net/e/10D71418-B19A-4DB4-A2CE-1C8EF38224C3
 
 ### Pitch Choice 2 - Generative AI and Large Language Models 
 

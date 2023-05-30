@@ -10,8 +10,8 @@ Generative AI and Large Language Models  https://brightspace.ucd.ie/d2l/le/conte
 XXX
 
 ### Pitches
-[The phat Pitches doc](https://www.overleaf.com/2678225473gzwbgpgqmscf
-)
+[The phat Pitches doc](https://www.overleaf.com/2678225473gzwbgpgqmscf)
+
 [Real pitch link](https://www.overleaf.com/7953245195swjqxjcbnzwp)
 
 ### Discussions

@@ -9,7 +9,5 @@ Generative AI and Large Language Models  https://brightspace.ucd.ie/d2l/le/conte
   - **Choice 3)**
 Exploring Quantum Machine Learning https://brightspace.ucd.ie/d2l/le/content/203851/viewContent/2489171/View
 
-
-
-### Discussions
+## Discussions
 [Discussions git](https://github.com/soggyfox/WIP_Temp/discussions )

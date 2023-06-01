@@ -1,4 +1,5 @@
-# [Jira](https://supersaiyansucd.atlassian.net/jira/software/projects/SUP/boards/1)
+# Jira
+[Jira Board](https://supersaiyansucd.atlassian.net/jira/software/projects/SUP/boards/1)
 
 # Project Resolution (soon)
   - **Choice 1)**

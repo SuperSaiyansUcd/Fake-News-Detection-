@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Analysis for: <%= cleanTitle %></title>
+    <link rel="stylesheet" href="../public/assets/styles.css">
+  </head>
+  <body>
+     
+	  <h1>Title: <%= ' ' + cleanTitle %> </h1>
+    <button onclick="location.href='/'">Return to the main page</button>
+    <!-- display content -->
+    <section class="displayResult">
+      <%= displayResult(); %>
+    </section>
+    
+
+  </body>
+</html>
+
+<% function displayResult() { %>
+  <h1>Our detector decides that this article can be: </h1>
+  <h2>% real</h2>
+  <h2>% fake</h2>
+<% } %>

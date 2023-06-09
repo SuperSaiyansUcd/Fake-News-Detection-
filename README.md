@@ -1,3 +1,8 @@
+# Deadlines Coming Up
+[Project Plan](https://docs.google.com/document/d/1DEfSOPtI0EueAFFQNPuqM4YZc854BMYsNeuGYARkC6I/edit) 
+Show And Tell 2
+
+
 # Project
 [ Sentiment Analysis For Fake News Detection](https://brightspace.ucd.ie/d2l/le/content/203851/viewContent/2489174/View) 
  

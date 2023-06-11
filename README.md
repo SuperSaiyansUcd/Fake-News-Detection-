@@ -16,8 +16,9 @@
 # Google Drive
 [Shared_Drive](https://drive.google.com/drive/folders/17bg7uAdMMLsveVkH3WGmuNHNnx56T3ih?usp=sharing)
 
-# Presentations
-[Show and Tell Presentation 1](https://www.canva.com/design/DAFkqU8nHGM/z4ZhfsHu2iiywssDv3mRWA/edit?utm_content=DAFkqU8nHGM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+# Figma Design
+[Mobile Design
+](https://www.figma.com/file/hwavL1YKf8Y5uNZMTNIceo/Note-taking-Mobile-iOS-App-(Community)?type=design&node-id=1%3A230&t=vra8XibZhSOefqtL-1)
 
 ## Discussions
 [Discussions git](https://github.com/soggyfox/WIP_Temp/discussions )

@@ -1,0 +1,7 @@
+MOM - 9th Jun 2023
+
+- Discussed project goals with the mentors.
+- Dataset source is suggested by mentors(semeval).
+-Requested the mentors for azure credentials.
+- Scheduled a bi-weekly meeting with the mentors
+- Project plan subject to be changed upon mentor's guidance

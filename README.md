@@ -1,8 +1,13 @@
+# Agenda
+- Progress Update 
+- Q and A resolution 
+- Inform about next meeting (bi-weekly)
+- task prioritisation
+- Create new upcoming tasks
+- Assign future tasks(and deadlines)
+- Github tutorial  
+
 # Deadlines Coming Up
-[Project Plan](https://docs.google.com/document/d/1DEfSOPtI0EueAFFQNPuqM4YZc854BMYsNeuGYARkC6I/edit) 
-
-[Show And Tell 2](https://www.canva.com/design/DAFlVgQT6WE/U44dqrm2f_h526eFdjDeLw/edit?utm_content=DAFlVgQT6WE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-
 
 # Project
 [ Sentiment Analysis For Fake News Detection](https://brightspace.ucd.ie/d2l/le/content/203851/viewContent/2489174/View) 

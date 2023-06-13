@@ -1,11 +1,5 @@
 # Agenda
 - Progress Update 
-- Q and A resolution 
-- Inform about next meeting (bi-weekly)
-- task prioritisation
-- Create new upcoming tasks
-- Assign future tasks(and deadlines)
-- Github tutorial  
 
 # Deadlines Coming Up
 

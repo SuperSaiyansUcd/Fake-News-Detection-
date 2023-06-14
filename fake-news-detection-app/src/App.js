@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
+  // react hook for button
   const [text, setText] = useState("");
 
   const handleInputChange = (event) => {
@@ -9,7 +10,7 @@ function App() {
   };
 
   const handleButtonClick = () => {
-    console.log("Button clicked:", text);
+    console.log("event triggered - add new page with spectrum output ", text);
   };
 
   return (
@@ -24,7 +25,6 @@ function App() {
           placeholder="Paste Text Here"
         />
         <button onClick={handleButtonClick}>Submit</button>
-        <p>{text}</p>
       </header>
     </div>
   );

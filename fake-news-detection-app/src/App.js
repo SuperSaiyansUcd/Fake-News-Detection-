@@ -1,22 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [text, setText] = useState("");
+
+  const handleInputChange = (event) => {
+    setText(event.target.value);
+  };
+
+  const handleButtonClick = () => {
+    console.log("Button clicked:", text);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Fake News Detector</h1>
+        <div className="LineSpectrum"></div>
+        <input
+          type="text"
+          value={text}
+          onChange={handleInputChange}
+          placeholder="Paste Text Here"
+        />
+        <button onClick={handleButtonClick}>Submit</button>
+        <p>{text}</p>
       </header>
     </div>
   );

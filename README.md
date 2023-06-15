@@ -1,5 +1,8 @@
 # Agenda
 - Progress Update 
+front-end-components-init
+
+- Q and A resolution 
 
 # Deadlines Coming Up
 - Show and Tell 3 

@@ -8,7 +8,7 @@ export default function Home() {
 
     const navigate = useNavigate();
     const toResult = () => {
-        if (title != "") {
+        if (title !== "") {
             navigate('Result', { title, content } );
         }
         

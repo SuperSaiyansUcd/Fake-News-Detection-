@@ -8,9 +8,8 @@ export default function Home() {
 
     const navigate = useNavigate();
     const toResult = () => {
-        if (title != null) {
+        if (title != "") {
             navigate('Result', { title, content } );
-            // ISSUE: title & content are always null
         }
         
     }

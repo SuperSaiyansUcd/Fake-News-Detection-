@@ -1,9 +1,12 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
 
 export default function Home() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+
+    const location = useLocation();
+    
 
     const navigate = useNavigate();
     const toResult = (e) => {
@@ -12,6 +15,28 @@ export default function Home() {
             navigate('/result', { state: { title, content } }); // Pass object , in the future this will be a json object
         }
     };
+
+    useEffect(() => {
+        if (location.state != null ){
+            setTitle(location.state.title);
+            setContent(location.state.content);
+        }
+    }, [location.state]);
+
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+          e.preventDefault();
+          e.returnValue = ''; // Chrome requires this to be set
+          setTitle('');
+          setContent('');
+        };
+      
+        window.addEventListener('beforeunload', handleBeforeUnload);
+      
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+      }, []);
 
     return (
         <>

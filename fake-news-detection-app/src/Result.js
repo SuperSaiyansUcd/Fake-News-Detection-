@@ -1,14 +1,16 @@
-import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Result() {
     const location = useLocation();
-    const { title, content } = location.state;
-
+    const title = location.state.title;
+    const content = location.state.content;
+ 
     const navigate = useNavigate();
-    const toHome = (e) => {   
-        navigate('/');   
+    const toHome = (e) => {  
+        e.preventDefault();
+        if (title !== "") { 
+            navigate('/',  { state: { title, content } });   
+        }
     };
 
     return (<>

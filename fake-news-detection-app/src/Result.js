@@ -7,18 +7,19 @@ export default function Result() {
     const { title, content } = location.state;
 
     const navigate = useNavigate();
-    const toHome = (e) => {
-        
+    const toHome = (e) => {   
         navigate('/');   
     };
 
     return (<>
         <div>
             {/* TODO: Add spectrum */}
-            <h1>spectrum</h1>
+            <h1>TODO: spectrum</h1>
             <h2>This article is 80% likely to be true.</h2>
-            <p>Title: {title}</p>
-            <p>Content: {content}</p>
+            <p>Title: </p>
+            <p>{title}</p>
+            <p>Content: </p>
+            <p>{content}</p>
         </div>
         <button onClick={ toHome }>Return to home page</button>
         </>

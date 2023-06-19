@@ -8,8 +8,10 @@ export default function Result() {
     const navigate = useNavigate();
     const toHome = (e) => {  
         e.preventDefault();
+        localStorage.setItem('title', title);
+        localStorage.setItem('content', content);
         if (title !== "") { 
-            navigate('/',  { state: { title, content } });   
+            navigate('/');   
         }
     };
 

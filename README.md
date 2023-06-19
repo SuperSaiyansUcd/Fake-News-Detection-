@@ -1,6 +1,6 @@
 # Agenda
-- Progress Update 
-- Q and A resolution 
+- Standup
+- New task assignment 
 
 # Deadlines Coming Up
 

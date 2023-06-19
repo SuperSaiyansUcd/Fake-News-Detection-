@@ -13,6 +13,7 @@ export default function Home() {
         }
     };
 
+    // when return to the home page, data should be preserved
     useEffect(() => {
         console.log(localStorage.getItem('title'));
         if (localStorage.getItem('title') != null) {
@@ -21,6 +22,7 @@ export default function Home() {
         }
     }, []);
 
+    // data is cleared when refreshing the homepage
     useEffect(() => {
         const handleBeforeUnload = (e) => {
           e.preventDefault();

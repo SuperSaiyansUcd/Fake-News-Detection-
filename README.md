@@ -3,6 +3,8 @@
 - New task assignment 
 
 # Deadlines Coming Up
+- Demo
+- Show and Tell 3 presentation
 
 # Project
 [ Sentiment Analysis For Fake News Detection](https://brightspace.ucd.ie/d2l/le/content/203851/viewContent/2489174/View) 

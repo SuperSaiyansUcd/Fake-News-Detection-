@@ -40,6 +40,10 @@ textarea {
   min-height: 190px;
 }
 
+div {
+  width: 75vw;
+}
+
 .input-box {
   width: 75vw;
 }

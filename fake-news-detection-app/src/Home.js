@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-
+    
     const navigate = useNavigate();
     const toResult = (e) => {
         e.preventDefault();
@@ -12,6 +12,31 @@ export default function Home() {
             navigate('/result', { state: { title, content } }); // Pass object , in the future this will be a json object
         }
     };
+
+    // when return to the home page, data should be preserved
+    useEffect(() => {
+        console.log(localStorage.getItem('title'));
+        if (localStorage.getItem('title') != null) {
+            setTitle(localStorage.getItem('title'));
+            setContent(localStorage.getItem('content'));   
+        }
+    }, []);
+
+    // data is cleared when refreshing the homepagen
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+          e.preventDefault();
+          e.returnValue = ''; 
+          localStorage.removeItem('title')
+          localStorage.removeItem('content')
+        };
+      
+        window.addEventListener('beforeunload', handleBeforeUnload);
+      
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
 
     return (
         <>

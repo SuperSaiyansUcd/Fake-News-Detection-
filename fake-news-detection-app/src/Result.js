@@ -57,4 +57,12 @@ export default function Result() {
         <button onClick={ toHome }>Return to home page</button>
         </>
     );
+
+    function validateTruthScore(truthfulnessScore) {
+        if (truthfulnessScore >= 0 && truthfulnessScore <= 100) {
+          return truthfulnessScore;
+        }
+        return -1;
+      }
+      
 }

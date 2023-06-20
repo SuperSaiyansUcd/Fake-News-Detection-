@@ -1,5 +1,0 @@
-- Add state management (martin)
-- Transfer data between pages (kevin)
-- Add indicator
-- Add indicator arrow
-- Add notation

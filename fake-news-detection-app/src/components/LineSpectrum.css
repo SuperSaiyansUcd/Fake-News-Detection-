@@ -48,3 +48,16 @@
   margin-top: 5px;
   margin-left: 5px;
 }
+
+.end-labels {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  width: 2200px; /* Adjust the width as needed */
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-80%);
+}
+
+

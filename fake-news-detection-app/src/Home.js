@@ -22,7 +22,7 @@ export default function Home() {
         }
     }, []);
 
-    // data is cleared when refreshing the homepage
+    // data is cleared when refreshing the homepagen
     useEffect(() => {
         const handleBeforeUnload = (e) => {
           e.preventDefault();

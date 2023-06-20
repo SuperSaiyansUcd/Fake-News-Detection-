@@ -1,26 +1,50 @@
 .spectrum-container {
-    position: relative;
-    width: 100%;
-    height: 20px;
-  }
-  
-  .line-spectrum {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(to right, red, green);
-    transform: translateY(-50%);
-  }
-  
-  .arrow {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    transform: translateY(-50%) translateX(-50%) rotate(45deg);
-  }
+  position: relative;
+  width: 100%;
+  height: 20px;
+}
 
+.line-spectrum {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, red, green);
+  transform: translateY(-50%);
+}
+
+.arrow {
+  position: absolute;
+  top: 50%; /* Updated to position the arrow vertically centered */
+  left: 0;
+  width: 10px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff; /* Updated to set the value number color to white */
+  font-weight: bold;
+  font-size: 16px; /* Updated to make the value number larger */
+  transform: translateY(50%); /* Added to adjust the vertical positioning */
+}
+
+.arrow-triangle {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid white;
+}
+
+.arrow-rectangle {
+  width: 8px;
+  height: 4px;
+  background-color: white;
+}
+
+.value {
+  margin-top: 5px;
+  margin-left: 5px;
+}

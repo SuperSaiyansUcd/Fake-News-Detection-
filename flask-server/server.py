@@ -2,21 +2,21 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)  # Enable CORS
 
 # members from front-end
 @app.route('/api/submit', methods=['POST'])
 def submit_data():
-    # Handle the POST request and process the form data
+    # Handle POST request 
     title = request.json.get('title')
     content = request.json.get('content')
 
     # Process the form data
-    # ...
+    # TODO
 
     # Return a response
     response = {
-        'message': 'Form data received successfully',
+        'message': 'Form data received :)',
         'title': title,
         'content': content
     }

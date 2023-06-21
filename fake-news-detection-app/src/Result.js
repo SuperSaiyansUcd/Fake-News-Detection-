@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import LineSpectrum from './components/LineSpectrum';
+import { useState, useEffect } from "react";
 
 export default function Result() {
     const location = useLocation();
@@ -15,6 +16,18 @@ export default function Result() {
             navigate('/');   
         }
     };
+    const [data, setData] = useState([{}])
+
+    useEffect(() => {
+      fetch("http://127.0.0.1:5000/members").then(
+        res => res.json()
+      ).then(
+        data => {
+          setData(data)
+          console.log(data, "hi")
+        }
+      )
+    }, [])
 
     const truthfulnessScore = 80; // Value will come from the model
     const truthfulnessScoreValidated = validateTruthScore(truthfulnessScore);
@@ -46,7 +59,15 @@ export default function Result() {
 
     return (<>
         <div>
-            {/* TODO: Add spectrum */}
+            
+            {(typeof data.members === 'undefined') ? (
+                <p>Loading...</p>
+            ) : (
+                data.members.map((members,i) => (
+                    <p key={i}>{members}</p>
+                ))
+            )}
+
             <LineSpectrum value={truthfulnessScoreValidated} />
             <h2>{resultText}</h2>
             <p>Title: </p>

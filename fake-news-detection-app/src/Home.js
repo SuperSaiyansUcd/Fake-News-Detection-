@@ -1,26 +1,50 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
+import axios from 'axios';
 
 export default function Home() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     
     const navigate = useNavigate();
+    // const toResult = (e) => {
+    //     e.preventDefault();
+    //     if (title !== "") {
+    //         navigate('/result', { state: { title, content } }); // Pass object , in the future this will be a json object
+    //     }
+    // };
     const toResult = (e) => {
         e.preventDefault();
         if (title !== "") {
-            navigate('/result', { state: { title, content } }); // Pass object , in the future this will be a json object
+          // Send data using axois
+          axios.post('http://127.0.0.1:5000/api/submit', { title, content })
+          .then((response) => {
+            // Handle the response from the backend
+            console.log(response.data);
+            navigate('/result', { state: { title, content } });
+          })
+          .catch((error) => {
+            // Handle any errors
+            console.error(error);
+          });        
+             
         }
-    };
+      };
+      
 
     // when return to the home page, data should be preserved
+    // useEffect(() => {
+    //     console.log(localStorage.getItem('title'));
+    //     if (localStorage.getItem('title') != null) {
+    //         setTitle(localStorage.getItem('title'));
+    //         setContent(localStorage.getItem('content'));   
+    //     }
+    // }, []);
     useEffect(() => {
-        console.log(localStorage.getItem('title'));
-        if (localStorage.getItem('title') != null) {
-            setTitle(localStorage.getItem('title'));
-            setContent(localStorage.getItem('content'));   
-        }
-    }, []);
+        localStorage.setItem('title', title);
+        localStorage.setItem('content', content);
+      }, [title, content]);
+      
 
     // data is cleared when refreshing the homepagen
     useEffect(() => {

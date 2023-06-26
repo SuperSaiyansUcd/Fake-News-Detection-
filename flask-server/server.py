@@ -6,7 +6,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import numpy as np
 from keras.models import load_model
-from keras.preprocessing.sequence import pad_sequences
+from keras_preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from textblob import TextBlob
 

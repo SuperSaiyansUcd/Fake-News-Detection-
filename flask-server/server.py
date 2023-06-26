@@ -8,7 +8,6 @@ import numpy as np
 from keras.models import load_model
 from keras_preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
-from textblob import TextBlob
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS
@@ -46,15 +45,12 @@ def preprocess_text(text):
 
 @app.route('/api/submit', methods=['POST'])
 def submit_data():
-    # Handle POST request 
+    # Handle POST request
     title = request.json.get('title')
     content = request.json.get('content')
 
     # Process the form data
     preprocessed_content = preprocess_text(content)
-
-    # Perform sentiment analysis using TextBlob
-    sentiment_score = TextBlob(preprocessed_content).sentiment.polarity
 
     # Tokenize and pad the text
     text_sequence = tokenizer.texts_to_sequences([preprocessed_content])
@@ -62,7 +58,14 @@ def submit_data():
 
     # Make predictions
     prediction = model.predict(text_sequence)
-    is_fake = int(prediction > 0.5)
+    is_fake = int(prediction[0][0] > 0.5)
+
+    # Print debug statements
+    print("Title:", title)
+    print("Content:", content)
+    print("Preprocessed Content:", preprocessed_content)
+    print("Prediction:", prediction)
+    print("Is Fake:", is_fake)
 
     # Return the prediction and sentiment analysis score
     response = {
@@ -70,14 +73,11 @@ def submit_data():
         'title': title,
         'content': content,
         'is_fake': is_fake,
-        'sentiment_score': sentiment_score
+        'sentiment_score': float(prediction[0][0])
     }
     return jsonify(response), 200
 
-@app.route("/members")
-def members():
-    
-    return jsonify({"members": ["mem1", "mem2"]})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

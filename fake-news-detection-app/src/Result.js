@@ -16,21 +16,29 @@ export default function Result() {
             navigate('/');   
         }
     };
-    const [data, setData] = useState([{}])
+
+    const [data, setData] = useState({});
 
     useEffect(() => {
-      fetch("http://127.0.0.1:5000/members").then(
-        res => res.json()
-      ).then(
-        data => {
-          setData(data)
-          console.log(data, "hi")
-        }
-      )
-    }, [])
+        fetch("http://127.0.0.1:5000/api/submit", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, content }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setData(data);
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }, [title, content]);
 
-    const truthfulnessScore = 80; // Value will come from the model
-    const truthfulnessScoreValidated = validateTruthScore(truthfulnessScore);
+    const truthfulnessScore = Math.round((1 - data.is_fake) * 100);
+    const isFake = data.is_fake === 1;
 
     const conditionMap = [
         { range: [0, 10], text: 'This is very likely fake news' },
@@ -41,49 +49,34 @@ export default function Result() {
         { range: [81, 90], text: 'This is likely authentic news' },
         { range: [91, 100], text: 'This is very likely authentic news' },
     ];
-      
-    // keep result text a const for security
-    const resultText = conditionMap
-    .reverse()
-    .find(({ range }) => {
-    const [min, max] = range;
-    return truthfulnessScoreValidated >= min && truthfulnessScoreValidated <= max;
-    })?.text || 'Error - Currently unable to judge the articles authenticity';
 
-    function validateTruthScore(truthfulnessScore) {
-    if (truthfulnessScore >= 0 && truthfulnessScore <= 100) {
-        return truthfulnessScore;
-    }
-    return -1;
-    }
+    const resultText = isFake
+        ? 'This is very likely fake news'
+        : conditionMap
+              .reverse()
+              .find(({ range }) => {
+                  const [min, max] = range;
+                  return truthfulnessScore >= min && truthfulnessScore <= max;
+              })?.text || 'Error - Currently unable to judge the article\'s authenticity';
 
-    return (<>
-        <div>
-            
-            {(typeof data.members === 'undefined') ? (
-                <p>Loading...</p>
-            ) : (
-                data.members.map((members,i) => (
-                    <p key={i}>{members}</p>
-                ))
-            )}
-
-            <LineSpectrum value={truthfulnessScoreValidated} />
-            <h2>{resultText}</h2>
-            <p>Title: </p>
-            <p>{title}</p>
-            <p>Content: </p>
-            <p>{content}</p>
-        </div>
-        <button onClick={ toHome }>Return to home page</button>
+    return (
+        <>
+            <div>
+                {(typeof data.is_fake === 'undefined') ? (
+                    <p>Loading...</p>
+                ) : (
+                    <>
+                        <p>Truthfulness Score: {truthfulnessScore}</p>
+                        <LineSpectrum value={truthfulnessScore} />
+                        <h2>{resultText}</h2>
+                        <p>Title:</p>
+                        <p>{title}</p>
+                        <p>Content:</p>
+                        <p>{content}</p>
+                    </>
+                )}
+            </div>
+            <button onClick={toHome}>Return to home page</button>
         </>
     );
-
-    function validateTruthScore(truthfulnessScore) {
-        if (truthfulnessScore >= 0 && truthfulnessScore <= 100) {
-          return truthfulnessScore;
-        }
-        return -1;
-      }
-      
 }

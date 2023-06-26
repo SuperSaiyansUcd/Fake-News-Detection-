@@ -6,7 +6,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import numpy as np
 from keras.models import load_model
-from keras_preprocessing.sequence import pad_sequences
+from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from textblob import TextBlob
 
@@ -14,7 +14,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS
 
 # Load the saved model
-model = load_model('model.h5')
+model = load_model('fake_news_detection_model.h5')
 tokenizer = Tokenizer()
 max_seq_length = None  # Define the maximum sequence length used during training
 
@@ -61,8 +61,8 @@ def submit_data():
     text_sequence = pad_sequences(text_sequence, maxlen=max_seq_length)
 
     # Make predictions
-    prediction = model.predict_classes(text_sequence)[0][0]
-    is_fake = bool(prediction)  # Convert prediction to a boolean value
+    prediction = model.predict(text_sequence)
+    is_fake = (prediction > 0.5).astype(int)[0][0]  # Apply threshold of 0.5
 
     # Return the prediction and sentiment analysis score
     response = {

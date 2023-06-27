@@ -82,7 +82,7 @@ export default function Result() {
     return (<>
         <div className='resultPage'>
             <div className='part1'>
-                <LineSpectrum value={truthfulnessScoreValidated} />
+                <LineSpectrum value={truthfulnessScore} />
                 <h2>{resultText}</h2>
             </div>
             <div className='part2'>

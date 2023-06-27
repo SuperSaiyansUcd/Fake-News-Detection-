@@ -28,7 +28,7 @@ export default function Home() {
   useEffect(() => {
     const storedTitle = localStorage.getItem('title');
     const storedContent = localStorage.getItem('content');
-    if (storedTitle !== null && storedContent !== null) {
+    if (storedTitle !== "" || storedContent !== "") {
       setTitle(storedTitle);
       setContent(storedContent);
     }

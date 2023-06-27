@@ -59,24 +59,45 @@ export default function Result() {
                   return truthfulnessScore >= min && truthfulnessScore <= max;
               })?.text || 'Error - Currently unable to judge the article\'s authenticity';
 
-    return (
-        <>
-            <div>
-                {(typeof data.is_fake === 'undefined') ? (
-                    <p>Loading...</p>
-                ) : (
-                    <>
-                        <p>Truthfulness Score: {truthfulnessScore}</p>
-                        <LineSpectrum value={truthfulnessScore} />
-                        <h2>{resultText}</h2>
-                        <p>Title:</p>
-                        <p>{title}</p>
-                        <p>Content:</p>
-                        <p>{content}</p>
-                    </>
-                )}
+// <<<<<<< HEAD
+//     return (
+//         <>
+//             <div>
+//                 {(typeof data.is_fake === 'undefined') ? (
+//                     <p>Loading...</p>
+//                 ) : (
+//                     <>
+//                         <p>Truthfulness Score: {truthfulnessScore}</p>
+//                         <LineSpectrum value={truthfulnessScore} />
+//                         <h2>{resultText}</h2>
+//                         <p>Title:</p>
+//                         <p>{title}</p>
+//                         <p>Content:</p>
+//                         <p>{content}</p>
+//                     </>
+//                 )}
+//             </div>
+//             <button onClick={toHome}>Return to home page</button>
+// =======
+    return (<>
+        <div className='resultPage'>
+            <div className='part1'>
+                <LineSpectrum value={truthfulnessScoreValidated} />
+                <h2>{resultText}</h2>
             </div>
-            <button onClick={toHome}>Return to home page</button>
+            <div className='part2'>
+                <p>Title: </p>
+                <p className='box1'>{title}</p>
+                <p>Content: </p>
+                <p className='box2'>{content}</p>
+            </div>
+            <div className='part3'>
+                <button className='button' onClick={ toHome }>Return to home page</button>
+            </div>
+            
+        </div>
+        
+{/* >>>>>>> a19d68f (improve layout) */}
         </>
     );
 }

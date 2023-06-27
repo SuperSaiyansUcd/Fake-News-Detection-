@@ -54,32 +54,81 @@ export default function Home() {
     };
   }, []);
 
-  return (
-    <>
-      <h1>Fake News Detector</h1>
-      <form onSubmit={toResult}>
-        <div>
-          <label htmlFor="inbox1">Title:</label>
-          <input
-            value={title}
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            className="input-box"
-          />
-        </div>
-        <div>
-          <label htmlFor="inbox2">Content:</label>
-          <textarea
-            value={content}
-            type="text"
-            onChange={(e) => setContent(e.target.value)}
-            className="input-box"
-          />
-        </div>
-        <div>
-          <input className="button" type="submit" value="Submit" />
-        </div>
-      </form>
-    </>
-  );
+// <<<<<<< HEAD
+//   return (
+//     <>
+//       <h1>Fake News Detector</h1>
+//       <form onSubmit={toResult}>
+//         <div>
+//           <label htmlFor="inbox1">Title:</label>
+//           <input
+//             value={title}
+//             type="text"
+//             onChange={(e) => setTitle(e.target.value)}
+//             className="input-box"
+//           />
+//         </div>
+//         <div>
+//           <label htmlFor="inbox2">Content:</label>
+//           <textarea
+//             value={content}
+//             type="text"
+//             onChange={(e) => setContent(e.target.value)}
+//             className="input-box"
+//           />
+//         </div>
+//         <div>
+//           <input className="button" type="submit" value="Submit" />
+//         </div>
+//       </form>
+//     </>
+//   );
+// =======
+    const scrollToLast = () => {
+        window.scrollTo({
+            top: 1500,
+            behavior: 'smooth',
+        });
+      };
+
+    return (
+        <>
+            <section id="section1" class="section">
+                <h1 onClick={scrollToLast}>Fake News Detector</h1>
+            </section>  
+            <section id="section2" class="section">
+                <form onSubmit={toResult}> {/* Add input validation and onSubmit event handler to pass json to backend */}
+                    <div>
+                        <label htmlFor="inbox1">Title:</label>
+                        <input
+                            value={title}
+                            type="text"
+                            onChange={e => setTitle(e.target.value)}
+                            className="input-box"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="inbox2">Content:</label>
+                        <textarea
+                            value={content}
+                            type="text"
+                            onChange={e => setContent(e.target.value)}
+                            className="input-box"
+                        />
+                    </div>
+                    <div>
+                        <input
+                            className="button"
+                            type="submit"
+                            value="Submit"
+                        />
+                    </div>
+                </form>
+                <footer>
+                    &copy; 2023 SuperSaiyans. All rights reserved.
+                </footer>
+            </section>
+        </>
+    );
+// >>>>>>> a19d68f (improve layout)
 }

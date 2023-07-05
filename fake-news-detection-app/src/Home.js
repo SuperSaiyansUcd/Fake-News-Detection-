@@ -73,7 +73,7 @@ export default function Home() {
                     <div>
                       <label htmlFor="inbox1">Title:</label>
                       <input
-                        value={title}
+                        value={title || ""}
                         type="text"
                         onChange={e => setTitle(e.target.value)}
                         className="input-box"
@@ -82,7 +82,7 @@ export default function Home() {
                     <div>
                         <label htmlFor="inbox2">Content:</label>
                         <textarea
-                            value={content}
+                            value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
                             className="input-box"

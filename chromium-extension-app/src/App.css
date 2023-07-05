@@ -1,20 +1,37 @@
 .App {
-  padding: 0px 20px;
+  text-align: center;
+  padding: 20px;
 }
 
-.lists{
-  display: flex;
+h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.button{
-  background-color: aqua;
-  border: none;
-  border-radius: 20px;
+.input-container {
+  margin-bottom: 20px;
+}
+
+.input-container input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+}
+
+.input-container button {
   padding: 10px 20px;
-  font-weight: bold;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-.button:hover{
-  border: 1px solid black;
+.score-container {
+  margin-top: 20px;
+}
 
+.score-container p {
+  font-size: 18px;
+  margin-bottom: 10px;
 }

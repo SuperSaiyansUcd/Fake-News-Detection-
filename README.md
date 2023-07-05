@@ -3,7 +3,7 @@
 - [Distribution of Workload](https://www.overleaf.com/2826553731ndhqtmcxrssq)
 
 # Deadlines Coming Up
-- [Upcoming Show and Tell slides ](https://www.overleaf.com/2826553731ndhqtmcxrssq)
+- [Upcoming Show and Tell slides ](https://www.canva.com/design/DAFlVgQT6WE/U44dqrm2f_h526eFdjDeLw/edit)
 
 # RoadMap 
 [RoadMap](https://supersaiyansucd.atlassian.net/jira/software/projects/SUP/boards/1/roadmap)

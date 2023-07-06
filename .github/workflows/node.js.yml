@@ -2,9 +2,11 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - '*'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - '*'
 
 jobs:
   build:
@@ -34,7 +36,9 @@ jobs:
 
       - name: Update repository path
         run: |
-          sed -i 's#https://github.com/SuperSaiyansUcd/Fake-News-Detection-#https://github.com/SuperSaiyansUcd/Fake-News-Detection-/tree/main/fake-news-detection-app#' package.json
+          sed -i "s#https://github.com/SuperSaiyansUcd/Fake-News-Detection-#https://github.com/SuperSaiyansUcd/Fake-News-Detection-/tree/$(git rev-parse --abbrev-ref HEAD)/fake-news-detection-app#" package.json
+      
+
 
       # gh-pages requires the repo to be public so we won't do it right now
       # - name: Deploy with gh-pages

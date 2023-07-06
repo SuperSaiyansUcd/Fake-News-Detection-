@@ -2,7 +2,7 @@ import "./index.css"
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Home from "./Home";
 import Result from "./Result";
-import React, {useState, useEffect } from "react";
+import React from "react";
 
   // backend data https://github.com/miguelgrinberg/react-flask-app
 export default function App() {

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { RawAxiosRequestConfig } from 'axios';
 
 export default function Home() {
   const [title, setTitle] = useState('');

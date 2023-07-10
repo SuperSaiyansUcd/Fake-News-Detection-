@@ -11,8 +11,11 @@ export default function Result() {
     const toHome = (e) => {  
         e.preventDefault();
         localStorage.setItem('title', title);
+        if (title === null || title.trim().length === 0) {
+            localStorage.setItem('title', 'N/A');
+        }
         localStorage.setItem('content', content);
-        if (title !== "") { 
+        if (content !== "") { 
             navigate('/');   
         }
     };
@@ -37,6 +40,18 @@ export default function Result() {
         });
     }, [title, content]);
 
+
+    const [showComponent, setShowComponent] = useState(false);
+    useEffect(() => {
+        const delay = 65; 
+        const timer = setTimeout(() => {
+          setShowComponent(true);
+        }, delay);
+        return () => clearTimeout(timer); // Clean up the timer on unmount
+      }, []);
+
+
+
     const truthfulnessScore = Math.round((1 - data.is_fake) * 100);
     const isFake = data.is_fake === 1;
 
@@ -59,6 +74,10 @@ export default function Result() {
                   return truthfulnessScore >= min && truthfulnessScore <= max;
               })?.text || 'Error - Currently unable to judge the article\'s authenticity';
 
+    if (!showComponent) {
+        return null;
+    }
+
     return (<>
         <div className='resultPage'>
             <div className='part1'>
@@ -73,7 +92,8 @@ export default function Result() {
             </div>
             <div className='part3'>
                 <button className='button' onClick={ toHome }>Return to home page</button>
-            </div>   
+            </div>
+            
         </div>
         </>
     );

@@ -166,6 +166,10 @@ footer {
   opacity: 0.85;
 }
 
+.resultPage .part2 .box1{
+  min-height: 25px;
+}
+
 .resultPage .part2 .box2{
   min-height: 150px;
 }

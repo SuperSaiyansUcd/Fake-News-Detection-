@@ -24,7 +24,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: 'node-rnc'
+          app-name: 'FakeNewsNLP'
           publish-profile: ${{ secrets.azureWebAppPublishProfile }}
           images: 'contoso.azurecr.io/nodejssampleapp:${{ github.sha }}'
       - uses: actions/checkout@v3

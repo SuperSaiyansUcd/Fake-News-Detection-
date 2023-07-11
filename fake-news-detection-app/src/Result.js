@@ -18,9 +18,9 @@ export default function Result() {
     };
 
     const [data, setData] = useState({});
-
+//         fetch("http://127.0.0.1:5000/api/submit", {
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/api/submit", {
+        fetch("https://fakenewsnlp.azurewebsites.net/api/submit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

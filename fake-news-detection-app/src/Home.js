@@ -12,8 +12,9 @@ export default function Home() {
     e.preventDefault();
     if (title !== '') {
       // Send data using axios
+      //        .post('http://127.0.0.1:5000/api/submit', { title, content })
       axios
-        .post('http://127.0.0.1:5000/api/submit', { title, content })
+        .post('https://fakenewsnlp.azurewebsites.net/api/submit', { title, content })
         .then((response) => {
           // Handle the backend
           console.log(response.data);

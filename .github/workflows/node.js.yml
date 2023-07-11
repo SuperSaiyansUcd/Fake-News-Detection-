@@ -19,6 +19,11 @@ jobs:
         node-version: [18.x]
 
     steps:
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'node-rnc'
+          publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+          images: 'contoso.azurecr.io/nodejssampleapp:${{ github.sha }}'
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3

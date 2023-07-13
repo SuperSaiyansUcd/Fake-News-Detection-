@@ -5,6 +5,7 @@ import axios from 'axios';
 export default function Home() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -12,15 +13,12 @@ export default function Home() {
     e.preventDefault();
 
     if (content === null) {
-        alert('Content field cannot be empty!!');
+        setError(true);
     } else if ((content !== null && content.trim().length === 0)) {
-        console.log(title)
-        console.log(title.trim())
-        console.log(content)
-        console.log(content.trim())
-        alert('Content field cannot be empty!!');
+        setError(true);
     } else {
       // Send data using axios
+      setError(false);
       axios
         .post('http://127.0.0.1:5000/api/submit', { title, content })
         .then((response) => {
@@ -76,7 +74,7 @@ export default function Home() {
                 <h1 onClick={scrollToLast}>Fake News Detector</h1>
             </section>  
             <section id="section2" className="section">
-                <form onSubmit={toResult}> {/* Add input validation and onSubmit event handler to pass json to backend */}
+                <form onSubmit={toResult}> 
                     <div>
                         <label htmlFor="inbox1">Title:</label>
                         <input
@@ -92,7 +90,7 @@ export default function Home() {
                             value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
-                            className="input-box"
+                            className={error? "error" : "input-box"}
                             placeholder="Cannot be empty" 
                         />
                     </div>

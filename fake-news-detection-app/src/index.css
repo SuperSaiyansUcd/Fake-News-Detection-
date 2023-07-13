@@ -79,10 +79,9 @@ h1:hover {
   -webkit-text-stroke: 1px black; /* For Safari/Chrome */
 }
 
-
-
 textarea {
   min-height: 190px;
+  max-height: 300px;
   resize: vertical;
 }
 

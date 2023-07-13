@@ -100,7 +100,14 @@ export default function Home() {
                         <input
                             className="button"
                             type="submit"
-                            value="Submit"
+                            id="button1"
+                            value="Check with model 1"
+                        />
+                        <input
+                            className="button"
+                            type="submit"
+                            id="button2"
+                            value="Check with model 2"
                         />
                     </div>
                 </form>

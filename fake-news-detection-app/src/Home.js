@@ -76,7 +76,7 @@ export default function Home() {
             <section id="section2" className="section">
                 <form onSubmit={toResult}> 
                     <div>
-                        <label htmlFor="inbox1">Title:</label>
+                        <label htmlFor="inbox1">T I T L E</label>
                         <input
                             value={title || ""}
                             type="text"
@@ -85,13 +85,13 @@ export default function Home() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="inbox2">Content:</label>
+                        <label htmlFor="inbox2">C O N T E N T</label>
                         <textarea
                             value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
                             className={error? "error" : "input-box"}
-                            placeholder="Cannot be empty" 
+                            placeholder="cannot be empty" 
                         />
                     </div>
                     <div>
@@ -99,13 +99,13 @@ export default function Home() {
                             className="button"
                             type="submit"
                             id="button1"
-                            value="Check with model 1"
+                            value="Check With Model One"
                         />
                         <input
                             className="button"
                             type="submit"
                             id="button2"
-                            value="Check with model 2"
+                            value="Check With Model Two"
                         />
                     </div>
                 </form>

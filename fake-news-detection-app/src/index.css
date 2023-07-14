@@ -72,6 +72,12 @@ footer {
   position: relative; 
   overflow: visible;
   font-size: 0.9em;
+  animation: blinker 2s linear infinite;
+}
+@keyframes blinker {
+  50% {
+      opacity: 0.5;
+  }
 }
 .dropdown-content {
   display: none;

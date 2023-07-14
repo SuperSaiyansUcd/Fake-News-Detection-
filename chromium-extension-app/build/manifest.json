@@ -1,0 +1,15 @@
+{
+  "short_name": "Test App",
+  "name": "Create Test Sample",
+  "description": "Determine news test",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "My Test App",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo192.png",
+      "128": "logo512.png"
+    }
+  } 
+}

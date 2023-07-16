@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import './index.css';
 import axios from 'axios';
 
 export default function Home() {

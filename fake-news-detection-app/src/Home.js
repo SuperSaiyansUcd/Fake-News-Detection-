@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import './index.css';
 import axios from 'axios';
 
 export default function Home() {
@@ -73,35 +74,52 @@ export default function Home() {
 
     return (
         <>
+
+<nav role="navigation">
+  <div id="menuToggle">
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="menu">
+      <a href="#"><li>Home</li></a>
+      <a href="#"><li>About</li></a>
+      <a href="#"><li>Info</li></a>
+      <a href="#"><li>Contact</li></a>
+    </ul>
+  </div>
+</nav>
             <section id="section1" className="section">
-                <h1 onClick={scrollToLast}>Fake News Detector</h1>
-            </section>  
+              
+              <div class="header-container">
+                <h1>Fake News Detector</h1>
+                <a onClick={scrollToLast} className="button" id="scroll-bottom-button">
+                  Try it Out
+                </a>
+              </div>
+            </section>
+
             <section id="section2" className="section">
-                <div className="dropdown">
-                    <button>&#8801;</button>
-                    <div className="dropdown-content">
-                      <a href="/contact">Contact Us</a>
-                      <a href="/credits">Credits</a>
-                    </div>
-                </div>
+                
                 <form onSubmit={toResult}> 
                     <div>
-                        <label htmlFor="inbox1">T I T L E</label>
+                        <label htmlFor="inbox1">Title</label>
                         <input
                             value={title || ""}
                             type="text"
                             onChange={e => setTitle(e.target.value)}
                             className="input-box"
+                            placeholder="..." 
                         />
                     </div>
                     <div>
-                        <label htmlFor="inbox2">C O N T E N T</label>
+                        <label htmlFor="inbox2">Content</label>
                         <textarea
                             value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
                             className={error? "error" : "input-box"}
-                            placeholder="cannot be empty" 
+                            placeholder="..." 
                         />
                     </div>
                     <div>

@@ -86,8 +86,8 @@ export default function Home() {
     <span></span>
     <span></span>
     <ul id="menu">
-      <a href="#"><li>Give Feedback</li></a>
-      <a href="#"><li>Credits</li></a>
+      <a href="https://www.merriam-webster.com/dictionary/feedback"><li>Give Feedback</li></a>
+      <a href="Credits"><li>Credits</li></a>
     </ul>
   </div>
 </nav>

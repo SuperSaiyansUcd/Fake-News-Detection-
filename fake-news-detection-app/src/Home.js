@@ -71,6 +71,10 @@ export default function Home() {
             behavior: 'smooth',
         });
       };
+      const feedback = () => {
+        window.open('https://www.merriam-webster.com/dictionary/feedback', '_blank'); // Replace 'https://example.com' with your desired link
+      };
+      
 
     return (
         <>
@@ -82,24 +86,40 @@ export default function Home() {
     <span></span>
     <span></span>
     <ul id="menu">
-      <a href="#"><li>Home</li></a>
-      <a href="#"><li>About</li></a>
-      <a href="#"><li>Info</li></a>
-      <a href="#"><li>Contact</li></a>
+      <a href="#"><li>Give Feedback</li></a>
+      <a href="#"><li>Credits</li></a>
     </ul>
   </div>
 </nav>
             <section id="section1" className="section">
-              
               <div class="header-container">
-                <h1>Fake News Detector</h1>
-                <a onClick={scrollToLast} className="button" id="scroll-bottom-button">
-                  Try it Out
-                </a>
+                <div>
+                  <h1>Fake News Detector</h1>
+                </div>
+                <div class="button-container">
+                  <a onClick={scrollToLast} className="button" id="scroll-bottom-button">
+                    Try it Out
+                  </a>
+                  <a onClick={feedback} className="button"  id="link-button">
+                    Give Feedback
+                  </a>
+                </div>
               </div>
             </section>
 
+
+            <div id="menuToggle">
+                  <input type="checkbox" />
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <ul id="menu">
+                    <a href="#"><li>Give Feedback</li></a>
+                    <a href="#"><li>Credits</li></a>
+                  </ul>
+                </div>
             <section id="section2" className="section">
+
                 
                 <form onSubmit={toResult}> 
                     <div>

@@ -79,10 +79,20 @@ export default function Result() {
     }
 
     return (<>
+        <div id="menuToggle">
+            <input type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="#"><li>Info</li></a>
+                <a href="#"><li>Contact</li></a>
+            </ul>
+        </div>
         <div className='resultPage'>
             <div className='part1'>
+                <h2 style={{ fontSize: '34px' }}>{resultText}</h2>
                 <LineSpectrum value={truthfulnessScore} />
-                <h2>{resultText}</h2>
             </div>
             <div className='part2'>
                 <p>Title: </p>

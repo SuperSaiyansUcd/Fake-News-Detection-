@@ -5,16 +5,22 @@ import axios from 'axios';
 export default function Home() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
 
   const toResult = (e) => {
     e.preventDefault();
-    if (title !== '') {
+
+    if (content === null) {
+        setError(true);
+    } else if ((content !== null && content.trim().length === 0)) {
+        setError(true);
+    } else {
       // Send data using axios
-      //        .post('http://127.0.0.1:5000/api/submit', { title, content })
+      setError(false);
       axios
-        .post('https://fakenewsnlp.azurewebsites.net/api/submit', { title, content })
+        .post('http://127.0.0.1:5000/api/submit', { title, content })
         .then((response) => {
           // Handle the backend
           console.log(response.data);
@@ -41,18 +47,21 @@ export default function Home() {
   }, [title, content]);
 
   useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      e.preventDefault();
-      e.returnValue = '';
-      localStorage.removeItem('title');
-      localStorage.removeItem('content');
-    };
+    
+        console.log("not null")
+        const handleBeforeUnload = (e) => {
+        e.preventDefault();
+        e.returnValue = '';
+        localStorage.removeItem('title');
+        localStorage.removeItem('content');
+        };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('beforeunload', handleBeforeUnload);
 
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    
   }, []);
 
     const scrollToLast = () => {
@@ -68,32 +77,45 @@ export default function Home() {
                 <h1 onClick={scrollToLast}>Fake News Detector</h1>
             </section>  
             <section id="section2" className="section">
-                <form onSubmit={toResult}> {
-                /* Add input validation and onSubmit event handler to pass json to backend */
-                }
+                <div className="dropdown">
+                    <button>&#8801;</button>
+                    <div className="dropdown-content">
+                      <a href="/contact">Contact Us</a>
+                      <a href="/credits">Credits</a>
+                    </div>
+                </div>
+                <form onSubmit={toResult}> 
                     <div>
-                      <label htmlFor="inbox1">Title:</label>
-                      <input
-                        value={title || ""}
-                        type="text"
-                        onChange={e => setTitle(e.target.value)}
-                        className="input-box"
-                      />
+                        <label htmlFor="inbox1">T I T L E</label>
+                        <input
+                            value={title || ""}
+                            type="text"
+                            onChange={e => setTitle(e.target.value)}
+                            className="input-box"
+                        />
                     </div>
                     <div>
-                        <label htmlFor="inbox2">Content:</label>
+                        <label htmlFor="inbox2">C O N T E N T</label>
                         <textarea
                             value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
-                            className="input-box"
+                            className={error? "error" : "input-box"}
+                            placeholder="cannot be empty" 
                         />
                     </div>
                     <div>
                         <input
                             className="button"
                             type="submit"
-                            value="Submit"
+                            id="button1"
+                            value="Check With Model One"
+                        />
+                        <input
+                            className="button"
+                            type="submit"
+                            id="button2"
+                            value="Check With Model Two"
                         />
                     </div>
                 </form>

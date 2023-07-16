@@ -70,38 +70,75 @@ export default function Home() {
             behavior: 'smooth',
         });
       };
+      const feedback = () => {
+        window.open('https://www.merriam-webster.com/dictionary/feedback', '_blank'); // Replace 'https://example.com' with your desired link
+      };
+      
 
     return (
         <>
+
+<nav role="navigation">
+  <div id="menuToggle">
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+    <ul id="menu">
+      <a href="https://www.merriam-webster.com/dictionary/feedback"><li>Give Feedback</li></a>
+      <a href="Credits"><li>Credits</li></a>
+    </ul>
+  </div>
+</nav>
             <section id="section1" className="section">
-                <h1 onClick={scrollToLast}>Fake News Detector</h1>
-            </section>  
-            <section id="section2" className="section">
-                <div className="dropdown">
-                    <button>&#8801;</button>
-                    <div className="dropdown-content">
-                      <a href="/contact">Contact Us</a>
-                      <a href="/credits">Credits</a>
-                    </div>
+              <div class="header-container">
+                <div>
+                  <h1>Fake News Detector</h1>
                 </div>
+                <div class="button-container">
+                  <button onClick={scrollToLast} className="button" id="scroll-bottom-button">
+                    Try it Out
+                  </button>
+                  <button onClick={feedback} className="button"  id="link-button">
+                    Give Feedback
+                  </button>
+                </div>
+              </div>
+            </section>
+
+
+            <div id="menuToggle">
+                  <input type="checkbox" />
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <ul id="menu">
+                    <a href="https://www.merriam-webster.com/dictionary/feedback"><li>Give Feedback</li></a>
+                    <a href="credits"><li>Credits</li></a>
+                  </ul>
+                </div>
+            <section id="section2" className="section">
+
+                
                 <form onSubmit={toResult}> 
                     <div>
-                        <label htmlFor="inbox1">T I T L E</label>
+                        <label htmlFor="inbox1">Title</label>
                         <input
                             value={title || ""}
                             type="text"
                             onChange={e => setTitle(e.target.value)}
                             className="input-box"
+                            placeholder="..." 
                         />
                     </div>
                     <div>
-                        <label htmlFor="inbox2">C O N T E N T</label>
+                        <label htmlFor="inbox2">Content</label>
                         <textarea
                             value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
                             className={error? "error" : "input-box"}
-                            placeholder="cannot be empty" 
+                            placeholder="..." 
                         />
                     </div>
                     <div>

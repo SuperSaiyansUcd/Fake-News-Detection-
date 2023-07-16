@@ -79,15 +79,25 @@ export default function Result() {
     }
 
     return (<>
+        <div id="menuToggle">
+            <input type="checkbox" />
+            <span></span>
+            <span></span>
+            <span></span>
+            <ul id="menu">
+                <a href="https://www.merriam-webster.com/dictionary/feedback"><li>Info</li></a>
+                <a href="credits"><li>Credits</li></a>
+            </ul>
+        </div>
         <div className='resultPage'>
             <div className='part1'>
+            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold'  }}>{resultText}</h2>
                 <LineSpectrum value={truthfulnessScore} />
-                <h2>{resultText}</h2>
             </div>
             <div className='part2'>
-                <p>Title: </p>
+                <p style={{ fontSize: '18px', color: '#FFFFFF', fontWeight: 'bold'  }}>Title: </p>
                 <p className='box1'>{title}</p>
-                <p>Content: </p>
+                <p style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 'bold'  }}>Content: </p>
                 <p className='box2'>{content}</p>
             </div>
             <div className='part3'>

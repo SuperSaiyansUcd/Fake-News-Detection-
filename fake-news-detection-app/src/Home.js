@@ -96,12 +96,12 @@ export default function Home() {
                   <h1>Fake News Detector</h1>
                 </div>
                 <div class="button-container">
-                  <a onClick={scrollToLast} className="button" id="scroll-bottom-button">
+                  <button onClick={scrollToLast} className="button" id="scroll-bottom-button">
                     Try it Out
-                  </a>
-                  <a onClick={feedback} className="button"  id="link-button">
+                  </button>
+                  <button onClick={feedback} className="button"  id="link-button">
                     Give Feedback
-                  </a>
+                  </button>
                 </div>
               </div>
             </section>

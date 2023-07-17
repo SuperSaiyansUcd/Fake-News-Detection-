@@ -85,7 +85,7 @@ export default function Result() {
             <span></span>
             <span></span>
             <ul id="menu">
-                <a href="https://www.merriam-webster.com/dictionary/feedback"><li>Info</li></a>
+                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Info</li></a>
                 <a href="credits"><li>Credits</li></a>
             </ul>
         </div>

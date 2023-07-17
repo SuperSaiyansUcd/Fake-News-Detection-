@@ -71,7 +71,7 @@ export default function Home() {
         });
       };
       const feedback = () => {
-        window.open('https://www.merriam-webster.com/dictionary/feedback', '_blank'); // Replace 'https://example.com' with your desired link
+        window.open('https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK', '_blank'); // Replace 'https://example.com' with your desired link
       };
       
 
@@ -85,7 +85,7 @@ export default function Home() {
     <span></span>
     <span></span>
     <ul id="menu">
-      <a href="https://www.merriam-webster.com/dictionary/feedback"><li>Give Feedback</li></a>
+      <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Give Feedback</li></a>
       <a href="Credits"><li>Credits</li></a>
     </ul>
   </div>
@@ -113,7 +113,7 @@ export default function Home() {
                   <span></span>
                   <span></span>
                   <ul id="menu">
-                    <a href="https://www.merriam-webster.com/dictionary/feedback"><li>Give Feedback</li></a>
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Give Feedback</li></a>
                     <a href="credits"><li>Credits</li></a>
                   </ul>
                 </div>

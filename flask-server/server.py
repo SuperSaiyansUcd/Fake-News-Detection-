@@ -12,14 +12,11 @@ from keras.preprocessing.text import Tokenizer
 app = Flask(__name__)
 CORS(app)  # Enable CORS
 
-# Load the saved model
-model = load_model('model.h5')
-tokenizer = Tokenizer()
-max_seq_length = 49  # Define the maximum sequence length used during training
 
-nltk.download('stopwords')
-nltk.download('punkt')
-stop_words = set(stopwords.words('english'))
+@app.route('/')
+def home():
+    return 'Hello, Flask!'
+
 
 def preprocess_text(text):
     # Convert text to lowercase
@@ -43,6 +40,7 @@ def preprocess_text(text):
 
     return preprocessed_text
 
+
 @app.route('/api/submit', methods=['POST'])
 def submit_data():
     # Handle POST request
@@ -53,6 +51,7 @@ def submit_data():
     preprocessed_content = preprocess_text(content)
 
     # Tokenize and pad the text
+    tokenizer.fit_on_texts([preprocessed_content])
     text_sequence = tokenizer.texts_to_sequences([preprocessed_content])
     text_sequence = pad_sequences(text_sequence, maxlen=max_seq_length)
 
@@ -78,6 +77,15 @@ def submit_data():
     return jsonify(response), 200
 
 
-
 if __name__ == "__main__":
+    # Load the saved model
+    model = load_model('model.h5')
+    tokenizer = Tokenizer()
+    max_seq_length = 49  # Define the maximum sequence length used during training
+
+    nltk.download('stopwords')
+    nltk.download('punkt')
+    stop_words = set(stopwords.words('english'))
+
+    # Run the Flask application
     app.run(debug=True)

@@ -1,0 +1,8 @@
+flask
+flask_cors
+nltk
+numpy
+keras
+tensorflow
+keras_preprocessing
+gunicorn

@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import LineSpectrum from './components/LineSpectrum';
 import { useState, useEffect } from "react";
+import RadarCharts from './components/RadarChart';
 
 export default function Result() {
     const location = useLocation();
@@ -82,9 +83,12 @@ export default function Result() {
         <div className='resultPage'>
             <div className='part1'>
                 <LineSpectrum value={truthfulnessScore} />
-                <h2>{resultText}</h2>
             </div>
             <div className='part2'>
+                <h2>{resultText}</h2>
+                <RadarCharts/>
+            </div>
+            <div className='part3'>
                 <p>Title: </p>
                 <p className='box1'>{title}</p>
                 <p>Content: </p>

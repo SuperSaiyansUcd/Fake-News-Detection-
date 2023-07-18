@@ -75,6 +75,9 @@ export default function Home() {
       };
       
 
+    // comment
+
+
     return (
         <>
 
@@ -118,27 +121,31 @@ export default function Home() {
                   </ul>
                 </div>
             <section id="section2" className="section">
-
-                
+                <div className="dropdown">
+                    <button>&#8801;</button>
+                    <div className="dropdown-content">
+                      <a href="/contact">Contact Us</a>
+                      <a href="/credits">Credits</a>
+                    </div>
+                </div>
                 <form onSubmit={toResult}> 
                     <div>
-                        <label htmlFor="inbox1">Title</label>
+                        <label htmlFor="inbox1">T I T L E</label>
                         <input
                             value={title || ""}
                             type="text"
                             onChange={e => setTitle(e.target.value)}
                             className="input-box"
-                            placeholder="..." 
                         />
                     </div>
                     <div>
-                        <label htmlFor="inbox2">Content</label>
+                        <label htmlFor="inbox2">C O N T E N T</label>
                         <textarea
                             value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
                             className={error? "error" : "input-box"}
-                            placeholder="..." 
+                            placeholder="cannot be empty" 
                         />
                     </div>
                     <div>

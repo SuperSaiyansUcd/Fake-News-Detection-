@@ -81,7 +81,7 @@ export default function Home() {
     return (
         <>
 
-<nav role="navigation">
+{/* <nav role="navigation">
   <div id="menuToggle">
     <input type="checkbox" />
     <span></span>
@@ -92,7 +92,7 @@ export default function Home() {
       <a href="Credits"><li>Credits</li></a>
     </ul>
   </div>
-</nav>
+</nav> */}
             <section id="section1" className="section">
               <div class="header-container">
                 <div>
@@ -110,7 +110,7 @@ export default function Home() {
             </section>
 
 
-            <div id="menuToggle">
+            {/* <div id="menuToggle">
                   <input type="checkbox" />
                   <span></span>
                   <span></span>
@@ -119,7 +119,7 @@ export default function Home() {
                     <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Give Feedback</li></a>
                     <a href="credits"><li>Credits</li></a>
                   </ul>
-                </div>
+                </div> */}
             <section id="section2" className="section">
                 <div className="dropdown">
                     <button>&#8801;</button>

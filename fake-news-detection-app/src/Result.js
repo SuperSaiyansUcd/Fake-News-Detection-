@@ -79,37 +79,31 @@ export default function Result() {
         return null;
     }
 
-    return (<>
-        <div id="menuToggle">
-            <input type="checkbox" />
-            <span></span>
-            <span></span>
-            <span></span>
-            <ul id="menu">
-                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Info</li></a>
-                <a href="credits"><li>Credits</li></a>
-            </ul>
-        </div>
-        <div className='resultPage'>
-            <div className='part1'>
-            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold'  }}>{resultText}</h2>
-                <LineSpectrum value={truthfulnessScore} />
+    return (
+        <>
+          <div className="resultPage" style={{ backgroundColor: '#FFFFFF', color: '#000000' }}>
+            <div className="part1">
+              <h2>{resultText}</h2>
+              <LineSpectrum value={truthfulnessScore} />
             </div>
-            <div className='part2'>
-                <h2>{resultText}</h2>
-                <RadarCharts/>
+            <div className="part2">
+              <h2>{resultText}</h2>
+              <RadarCharts />
             </div>
-            <div className='part3'>
-                <p>Title: </p>
-                <p className='box1'>{title}</p>
-                <p style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 'bold'  }}>Content: </p>
-                <p className='box2'>{content}</p>
+            <div className="part3">
+              <p>Title: </p>
+              <p className="box1">{title}</p>
+              <p style={{ fontSize: '14px', color: '#000000', fontWeight: 'bold' }}>Content: </p>
+              <p className="box2">{content}</p>
             </div>
-            <div className='part3'>
-                <button className='button' onClick={ toHome }>Return to home page</button>
+            <div className="part3">
+              <button className="button" onClick={toHome}>
+                Return to home page
+              </button>
             </div>
-            
-        </div>
+          </div>
         </>
-    );
+      );
+      
+      
 }

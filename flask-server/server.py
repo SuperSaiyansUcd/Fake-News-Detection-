@@ -10,7 +10,7 @@ from keras_preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
 @app.route('/')

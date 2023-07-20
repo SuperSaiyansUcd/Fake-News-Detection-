@@ -12,6 +12,17 @@ from keras.preprocessing.text import Tokenizer
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+@app.route('/')
+def home():
+    return 'Hello, Flask!'
+
+@app.route('/favicon.ico')
+def favicon():
+    # Return the favicon file here
+    # You can also just return an empty response (no favicon) to get rid of the 404 error.
+    return ''
+
+
 def preprocess_text(text):
     # Convert text to lowercase
     text = text.lower()

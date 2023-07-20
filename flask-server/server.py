@@ -10,7 +10,7 @@ from keras_preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/')
@@ -88,4 +88,4 @@ if __name__ == "__main__":
     stop_words = set(stopwords.words('english'))
 
     # Run the Flask application
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5001, debug=True)

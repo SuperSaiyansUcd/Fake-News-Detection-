@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
 import re
 import nltk
@@ -6,17 +6,15 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import numpy as np
 from keras.models import load_model
-from keras_preprocessing.sequence import pad_sequences
+from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
-
+cors = CORS(app, resources={r"/api/*": {"origins": "http://localhost"}})
 
 @app.route('/')
 def home():
     return 'Hello, Flask!'
-
 
 def preprocess_text(text):
     # Convert text to lowercase
@@ -39,7 +37,6 @@ def preprocess_text(text):
     preprocessed_text = " ".join(tokens)
 
     return preprocessed_text
-
 
 @app.route('/api/submit', methods=['POST'])
 def submit_data():
@@ -75,7 +72,6 @@ def submit_data():
         'sentiment_score': float(prediction[0][0])
     }
     return jsonify(response), 200
-
 
 if __name__ == "__main__":
     # Load the saved model

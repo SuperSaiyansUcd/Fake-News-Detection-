@@ -20,7 +20,7 @@ export default function Result() {
             navigate('/');   
         }
     };
-
+    
     const [data, setData] = useState({});
 
     useEffect(() => {
@@ -100,13 +100,15 @@ export default function Result() {
                 <RadarCharts/>
             </div>
             <div className='part3'>
-                <p>Title: </p>
+                <p>- Title -</p>
                 <p className='box1'>{title}</p>
-                <p style={{ fontSize: '14px', color: '#FFFFFF', fontWeight: 'bold'  }}>Content: </p>
+                <p>- Content -</p>
                 <p className='box2'>{content}</p>
             </div>
             <div className='part3'>
-                <button className='button' onClick={ toHome }>Return to home page</button>
+                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                    target="_blank"><button className='button'>Give Feedback</button></a> 
+                <button className='button' onClick={ toHome }>Return Home</button>
             </div>
             
         </div>

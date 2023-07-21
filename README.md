@@ -20,3 +20,6 @@
 
 ## Discussions
 [Discussions git](https://github.com/soggyfox/WIP_Temp/discussions )
+
+## Test Application
+http://fakenewsdetect.westeurope.cloudapp.azure.com:3000/

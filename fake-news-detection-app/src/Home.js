@@ -5,6 +5,7 @@ import axios from 'axios';
 export default function Home() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [url, setUrl] = useState('');
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -94,38 +95,32 @@ export default function Home() {
   </div>
 </nav>
             <section id="section1" className="section">
-              <div class="header-container">
-                <div>
-                  <h1>Fake News Detector</h1>
+                <div className="dropdown">
+                    <button>☰</button>
+                    <div className="dropdown-content">
+                      <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                          target="_blank">Feedback</a>
+                      <a href="/credits">Credits</a>
+                    </div>
                 </div>
-                <div class="button-container">
-                  <button onClick={scrollToLast} className="button" id="scroll-bottom-button">
-                    Try it Out
-                  </button>
-                  <button onClick={feedback} className="button"  id="link-button">
-                    Give Feedback
-                  </button>
-                </div>
-              </div>
-            </section>
-
-
-            <div id="menuToggle">
-                  <input type="checkbox" />
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <ul id="menu">
-                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Give Feedback</li></a>
-                    <a href="credits"><li>Credits</li></a>
-                  </ul>
-                </div>
+                <h1 onClick={scrollToLast}>Fake News Detector</h1>
+                {/* <div>
+                    <h2>dvwvwfsd</h2>
+                </div> */}
+            </section>  
             <section id="section2" className="section">
-
-                
                 <form onSubmit={toResult}> 
                     <div>
-                        <label htmlFor="inbox1">Title</label>
+                        <label htmlFor="inbox1">U R L</label>
+                        <input
+                            value={title || ""}
+                            type="text"
+                            onChange={e => setTitle(e.target.value)}
+                            className="input-box"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="inbox1">T I T L E</label>
                         <input
                             value={title || ""}
                             type="text"

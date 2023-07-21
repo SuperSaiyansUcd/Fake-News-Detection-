@@ -5,6 +5,7 @@ import axios from 'axios';
 export default function Home() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [url, setUrl] = useState('');
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -77,17 +78,30 @@ export default function Home() {
     return (
         <>
             <section id="section1" className="section">
-                <h1 onClick={scrollToLast}>Fake News Detector</h1>
-            </section>  
-            <section id="section2" className="section">
                 <div className="dropdown">
-                    <button>&#8801;</button>
+                    <button>☰</button>
                     <div className="dropdown-content">
-                      <a href="/contact">Contact Us</a>
+                      <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                          target="_blank">Feedback</a>
                       <a href="/credits">Credits</a>
                     </div>
                 </div>
+                <h1 onClick={scrollToLast}>Fake News Detector</h1>
+                {/* <div>
+                    <h2>dvwvwfsd</h2>
+                </div> */}
+            </section>  
+            <section id="section2" className="section">
                 <form onSubmit={toResult}> 
+                    <div>
+                        <label htmlFor="inbox1">U R L</label>
+                        <input
+                            value={title || ""}
+                            type="text"
+                            onChange={e => setTitle(e.target.value)}
+                            className="input-box"
+                        />
+                    </div>
                     <div>
                         <label htmlFor="inbox1">T I T L E</label>
                         <input

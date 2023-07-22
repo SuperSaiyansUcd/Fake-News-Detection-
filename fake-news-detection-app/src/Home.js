@@ -88,8 +88,10 @@ export default function Home() {
                     <button>☰</button>
                     <div className="dropdown-content">
                         <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
-                            target="_blank">Feedback
-                            rel="noopener noreferrer"</a>
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            Feedback
+                        </a>
                         <a href="/credits">Credits</a>
                     </div>
 

@@ -85,12 +85,15 @@ export default function Result() {
             <div className="dropdown">
                 <button>☰</button>
                 <div className="dropdown-content">
-                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank">Feedback</a>
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                        target="_blank">Feedback
+                        rel="noopener noreferrer"
+                    </a>
                     <a href="/credits">Credits</a>
                 </div>
             </div>
             <div className='part1'>
-            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold'  }}>{resultText}</h2>
+                <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>{resultText}</h2>
                 <LineSpectrum value={truthfulnessScore} />
             </div>
             <div className='part2'>
@@ -104,7 +107,9 @@ export default function Result() {
                 <p className='box2'>{content}</p>
             </div>
             <div className='part3'>
-                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank">
+                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                    target="_blank"
+                    rel="noopener noreferrer">
                     <button className='button'>Give Feedback</button></a>
                 <button className='button' onClick={toHome}>Return Home</button>
             </div>

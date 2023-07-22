@@ -215,6 +215,21 @@ div {
   width: 75vw;
 }
 
+/* .form-container {
+  display: flex;
+  align-items: center;
+  left: auto;
+} */
+
+/* .url-input-box {
+  margin-right: 1rem;
+  width: 100vw;
+} */
+
+/* .url-submit-button {
+  margin-right: 20rem; 
+} */
+
 .button {
   color:#ffffff;
   margin: 20px 10px;

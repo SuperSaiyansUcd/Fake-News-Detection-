@@ -85,12 +85,10 @@ export default function Result() {
             <div className="dropdown">
                 <button>☰</button>
                 <div className="dropdown-content">
-                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        Feedback
+                    <a href="/">Home</a>
 
-                    </a>
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
+                    <a href="/learn">Learn More</a>
                     <a href="/credits">Credits</a>
                 </div>
             </div>

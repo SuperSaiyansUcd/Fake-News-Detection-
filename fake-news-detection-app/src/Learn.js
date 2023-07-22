@@ -22,18 +22,21 @@ export default function Credits() {
                         <a href="/credits">Credits</a>
                     </div>
                 </div>
+
                 <div className='part1'>
-                    <h2>Acknowledgements</h2>
+                    <h2>Learn More</h2>
                 </div>
                 <ul className='part2'>
-                    <li>Homepage picture 1 - Photo by Mika Baumeister on Unsplash</li>
-                    <li>Homepage picture 2 - Photo by Hayden Walker on Unsplash</li>
-                    <li>Result page picture - Photo by Annie Spratt on Unsplash</li>
-                    <li>Credits page picture - Photo by Rishabh Sharma on Unsplash</li>
+                    <h4>Model Types</h4>
+                <li>Long Short-Term Memory (LSTM): This is a type of recurrent neural network that solves the <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem" target="_blank"><u>vanishing gradient problem</u></a></li>
+                    <li>An Ensemble Model is a machine learning model that combines the predicitions of multiple models to achieve better performance </li>
+                    <li>Our "Ensemble"(together) Model makes use of  </li>
                 </ul>
-                <p>
-                    Special thanks to our UCD and Microsoft mentors for their invaluable guidance and support throughout the module
-                </p>
+
+                <ul className='part2'>
+                    <h4>Parameter Types</h4>
+                    <li>Homepage picture 1 - Photo by Mika Baumeister on Unsplash</li>
+                </ul>
                 <div className='part3'>
                     <button className='button' onClick={toHome}>Return to home page</button>
                 </div>

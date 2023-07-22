@@ -1,31 +1,24 @@
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Home.css';
 
-export default function Home() {
+const Home = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [url, setUrl] = useState('');
     const [error, setError] = useState(false);
-
     const navigate = useNavigate();
 
     const toResult = (e) => {
         e.preventDefault();
 
-        if (content === null) {
-            setError(true);
-        } else if ((content !== null && content.trim().length === 0)) {
+        if (content === null || content.trim().length === 0) {
             setError(true);
         } else {
-            // Send data using axios
             setError(false);
-            axios
-                .post('http://127.0.0.1:5000/api/submit', { title, content })
+            axios.post('http://127.0.0.1:5000/api/submit', { title, content })
                 .then((response) => {
-                    // Handle the backend
-                    // console.log(response.data);
                     navigate('/result', { state: { title, content } });
                 })
                 .catch((error) => {
@@ -37,7 +30,7 @@ export default function Home() {
     useEffect(() => {
         const storedTitle = localStorage.getItem('title');
         const storedContent = localStorage.getItem('content');
-        if (storedTitle !== "" || storedContent !== "") {
+        if (storedTitle !== null || storedContent !== null) {
             setTitle(storedTitle);
             setContent(storedContent);
         }
@@ -49,8 +42,6 @@ export default function Home() {
     }, [title, content]);
 
     useEffect(() => {
-
-        // console.log("not null")
         const handleBeforeUnload = (e) => {
             e.preventDefault();
             e.returnValue = '';
@@ -63,13 +54,10 @@ export default function Home() {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-
     }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle the URL and perform necessary actions (e.g., validation)
-        // For simplicity, we'll just navigate back to the Home page with the URL as state.
         navigate('/', { state: { url } });
     };
 
@@ -80,36 +68,32 @@ export default function Home() {
         });
     };
 
-
     return (
         <>
             <section id="section1" className="section">
                 <div className="dropdown">
                     <button>☰</button>
                     <div className="dropdown-content">
-                        <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            Feedback
-                        </a>
+                        <a href="/">Home</a>
+
+                        <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
+                        <a href="/learn">Learn More</a>
                         <a href="/credits">Credits</a>
                     </div>
-
                 </div>
                 <div className="container">
                     <div className="try-it-out-banner">
-
                         <h1 onClick={scrollToLast} className="animated-heading">
                             Fake News Detector
-                            <button onClick={scrollToLast} >try it out</button>
+                            <button onClick={scrollToLast}>Try it out !</button>
                         </h1>
                     </div>
                 </div>
             </section>
             <section id="section2" className="section">
                 <form onSubmit={handleSubmit}>
-                    <div class="form-container">
-                        <label htmlFor="urlInput">P A S T E - U R L :</label>
+                    <div className="form-container">
+                        <label htmlFor="urlInput">P A S T E  -  U R L:</label>
                         <input
                             type="text"
                             id="urlInput"
@@ -121,12 +105,10 @@ export default function Home() {
                             className="button"
                             type="submit"
                             id="button1"
-                            title="Bidirectional Encoder Representations Machine Learning Model"
-                            value="Submit URL"
+                            title="Get Text from URL via web scraping"
+                            value="Get Text from URL"
                         />
                     </div>
-
-
                 </form>
                 <form onSubmit={toResult}>
                     <div>
@@ -134,17 +116,17 @@ export default function Home() {
                         <input
                             value={title}
                             type="text"
-                            onChange={e => setTitle(e.target.value)}
+                            onChange={(e) => setTitle(e.target.value)}
                             className="input-box"
                             placeholder="..."
                         />
                     </div>
                     <div>
-                        <label htmlFor="inbox2">Content</label>
+                        <label htmlFor="inbox2">C O N T E N T</label>
                         <textarea
                             value={content}
                             type="text"
-                            onChange={e => setContent(e.target.value)}
+                            onChange={(e) => setContent(e.target.value)}
                             className={error ? "error" : "input-box"}
                             placeholder="Enter Content"
                         />
@@ -172,4 +154,6 @@ export default function Home() {
             </section>
         </>
     );
-}
+};
+
+export default Home;

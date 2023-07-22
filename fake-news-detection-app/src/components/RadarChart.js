@@ -1,31 +1,22 @@
 import React from 'react';
-import { Radar, RadarChart, PolarGrid, 
-    PolarAngleAxis, PolarRadiusAxis } from 'recharts';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
 const RadarCharts = () => {
 
-    // Sample data
     const data = [
-        { name: 'A', x: 21 },
-        { name: 'B', x: 22 },
-        { name: 'C', x: -32 },
-        { name: 'D', x: -14 },
-        { name: 'E', x: -51 },
-        { name: 'F', x: 16 },
-        { name: 'G', x: 7 },
-        { name: 'H', x: -8 },
-        { name: 'I', x: 9 },
+        { name: 'Precision', x: 21 },
+        { name: 'Recall', x: 22 },
+        { name: 'F1-Score', x: 32 },
+        { name: 'Accuracy', x: 14 },
     ];
     
     return (
-        <RadarChart height={200} width={200} outerRadius="80%" data={data}>
+        <RadarChart height={300} width={400} outerRadius="80%" data={data}>
             <PolarGrid />
-            <PolarAngleAxis dataKey="name" />
+            <PolarAngleAxis dataKey="name" tick={{ fill: 'Black', fontWeight: 'bold' }} />
             <PolarRadiusAxis />
-            <Radar dataKey="x" stroke="green" 
-                fill="green" fillOpacity={0.5} />
+            <Radar dataKey="x" stroke="green" fill="blue" fillOpacity={0.5} />
         </RadarChart>
-        
     );
 }
     

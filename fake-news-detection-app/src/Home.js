@@ -1,82 +1,77 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Home.css';
 
 export default function Home() {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [url, setUrl] = useState('');
-  const [error, setError] = useState(false);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [url, setUrl] = useState('');
+    const [error, setError] = useState(false);
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const toResult = (e) => {
-    e.preventDefault();
+    const toResult = (e) => {
+        e.preventDefault();
 
-    if (content === null) {
-        setError(true);
-    } else if ((content !== null && content.trim().length === 0)) {
-        setError(true);
-    } else {
-      // Send data using axios
-      setError(false);
-      axios
-        .post('http://127.0.0.1:5000/api/submit', { title, content })
-        .then((response) => {
-          // Handle the backend
-          console.log(response.data);
-          navigate('/result', { state: { title, content } });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  };
+        if (content === null) {
+            setError(true);
+        } else if ((content !== null && content.trim().length === 0)) {
+            setError(true);
+        } else {
+            // Send data using axios
+            setError(false);
+            axios
+                .post('http://127.0.0.1:5000/api/submit', { title, content })
+                .then((response) => {
+                    // Handle the backend
+                    console.log(response.data);
+                    navigate('/result', { state: { title, content } });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    };
 
-  useEffect(() => {
-    const storedTitle = localStorage.getItem('title');
-    const storedContent = localStorage.getItem('content');
-    if (storedTitle !== "" || storedContent !== "") {
-      setTitle(storedTitle);
-      setContent(storedContent);
-    }
-  }, []);
+    useEffect(() => {
+        const storedTitle = localStorage.getItem('title');
+        const storedContent = localStorage.getItem('content');
+        if (storedTitle !== "" || storedContent !== "") {
+            setTitle(storedTitle);
+            setContent(storedContent);
+        }
+    }, []);
 
-  useEffect(() => {
-    localStorage.setItem('title', title);
-    localStorage.setItem('content', content);
-  }, [title, content]);
+    useEffect(() => {
+        localStorage.setItem('title', title);
+        localStorage.setItem('content', content);
+    }, [title, content]);
 
-  useEffect(() => {
-    
+    useEffect(() => {
+
         console.log("not null")
         const handleBeforeUnload = (e) => {
-        e.preventDefault();
-        e.returnValue = '';
-        localStorage.removeItem('title');
-        localStorage.removeItem('content');
+            e.preventDefault();
+            e.returnValue = '';
+            localStorage.removeItem('title');
+            localStorage.removeItem('content');
         };
 
         window.addEventListener('beforeunload', handleBeforeUnload);
 
         return () => {
-          window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    
-  }, []);
+
+    }, []);
 
     const scrollToLast = () => {
         window.scrollTo({
             top: 1500,
             behavior: 'smooth',
         });
-      };
-      const feedback = () => {
-        window.open('https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK', '_blank'); // Replace 'https://example.com' with your desired link
-      };
-      
-
-    // comment
+    };
 
 
     return (
@@ -98,18 +93,23 @@ export default function Home() {
                 <div className="dropdown">
                     <button>☰</button>
                     <div className="dropdown-content">
-                      <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
-                          target="_blank">Feedback</a>
-                      <a href="/credits">Credits</a>
+                        <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                            target="_blank">Feedback</a>
+                        <a href="/credits">Credits</a>
                     </div>
                 </div>
-                <h1 onClick={scrollToLast}>Fake News Detector</h1>
-                {/* <div>
-                    <h2>dvwvwfsd</h2>
-                </div> */}
-            </section>  
+                <div className="container">
+                    <div className="try-it-out-banner">
+
+                        <h1 onClick={scrollToLast} className="animated-heading">
+                            Fake News Detector
+                            <button onClick={scrollToLast} >try it out</button>
+                        </h1>
+                    </div>
+                </div>
+            </section>
             <section id="section2" className="section">
-                <form onSubmit={toResult}> 
+                <form onSubmit={toResult}>
                     <div>
                         <label htmlFor="inbox1">U R L</label>
                         <input
@@ -135,8 +135,8 @@ export default function Home() {
                             value={content || ""}
                             type="text"
                             onChange={e => setContent(e.target.value)}
-                            className={error? "error" : "input-box"}
-                            placeholder="..." 
+                            className={error ? "error" : "input-box"}
+                            placeholder="cannot be empty"
                         />
                     </div>
                     <div>

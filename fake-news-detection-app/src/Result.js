@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import LineSpectrum from './components/LineSpectrum';
 import { useState, useEffect } from "react";
 import RadarCharts from './components/RadarChart';
+import './Results.css'; // Import the CSS file
 
 export default function Result() {
     const location = useLocation();

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import './Credit.css';
 
 export default function Credits() {
     const navigate = useNavigate();

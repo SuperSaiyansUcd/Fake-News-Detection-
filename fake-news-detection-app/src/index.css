@@ -202,30 +202,6 @@ a {
   color: inherit;
 }
 
-textarea {
-  min-height: 190px;
-  max-height: 291px;
-  resize: vertical;
-}
-
-input, textarea {
-  background-color: rgb(228, 225, 220);
-  opacity: 0.9; 
-  border: 1.5px solid black;
-  border-radius: 1.5px;
-  color: #010000;
-  font-size: 18px;
-}
-
-label[for="inbox1"], label[for="inbox2"] {
-  font-size: 18px;
-  letter-spacing: 1px;
-  font-weight: bolder;
-}
-
-label[for="inbox2"] {
-  margin-top: 20px;
-}
 .error {
   width: 75vw;
   border: 2px solid red;
@@ -279,82 +255,6 @@ footer {
   }
 }
 
-.resultPage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url(../public/result.jpg);
-  background-size: cover;
-  overflow-y: scroll;
-  height: 100vh; 
-  width: 100vi;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  color: white;
-}
-
-.resultPage .part2 {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-top: 35px;
-}
-
-.resultPage .part2 h2{
-  padding-right: 10vw;
-}
-
-.resultPage .part3 p{
-  text-align: left;
-  padding-left: 5px;
-}
-
-.resultPage .part3 .box1, .resultPage .part3 .box2{
-  background-color: #eff2f5;
-  border-radius: 2.5px;
-  opacity: 0.88;
-  padding: 5px 11px;
-  overflow-wrap: break-word;
-  color: black;
-}
-
-.resultPage .part3 .box1{
-  min-height: 14px;
-}
-
-.resultPage .part3 .box2{
-  min-height: 150px;
-}
-
-.resultPage .button {
-  opacity: 0.6;
-  margin-bottom: 20px;
-}
-
-.resultPage .button:hover {
-  border-color: #e8e6e6;
-} 
-
-.creditsPage {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-image: url(../public/credits.jpg);
-  background-size: cover;
-  overflow-y: scroll;
-  height: 100vh; 
-  width: 100vi;
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  color: white;
-}
-
-.creditsPage .part1 {
-  margin-top: 100px;
-}
-.creditsPage .part3 {
-  margin-bottom: 100px;
-}
 
 
 ul {

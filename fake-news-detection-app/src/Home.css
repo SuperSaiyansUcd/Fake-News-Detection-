@@ -102,3 +102,9 @@
   #section2 form {
     justify-self: flex-start;
   }
+
+  .error {
+    width: 75vw;
+    border: 2px solid red;
+  }
+  

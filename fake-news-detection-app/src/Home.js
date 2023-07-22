@@ -25,7 +25,7 @@ export default function Home() {
                 .post('http://127.0.0.1:5000/api/submit', { title, content })
                 .then((response) => {
                     // Handle the backend
-                    console.log(response.data);
+                    // console.log(response.data);
                     navigate('/result', { state: { title, content } });
                 })
                 .catch((error) => {
@@ -50,7 +50,7 @@ export default function Home() {
 
     useEffect(() => {
 
-        console.log("not null")
+        // console.log("not null")
         const handleBeforeUnload = (e) => {
             e.preventDefault();
             e.returnValue = '';
@@ -111,18 +111,18 @@ export default function Home() {
             <section id="section2" className="section">
                 <form onSubmit={toResult}>
                     <div>
-                        <label htmlFor="inbox1">U R L</label>
+                        <label htmlFor="inbox0">U R L</label>
                         <input
-                            value={title || ""}
+                            value={url}
                             type="text"
-                            onChange={e => setTitle(e.target.value)}
+                            onChange={e => setUrl(e.target.value)}
                             className="input-box"
                         />
                     </div>
                     <div>
                         <label htmlFor="inbox1">T I T L E</label>
                         <input
-                            value={title || ""}
+                            value={title}
                             type="text"
                             onChange={e => setTitle(e.target.value)}
                             className="input-box"
@@ -132,7 +132,7 @@ export default function Home() {
                     <div>
                         <label htmlFor="inbox2">Content</label>
                         <textarea
-                            value={content || ""}
+                            value={content}
                             type="text"
                             onChange={e => setContent(e.target.value)}
                             className={error ? "error" : "input-box"}
@@ -144,13 +144,15 @@ export default function Home() {
                             className="button"
                             type="submit"
                             id="button1"
-                            value="Check With Model One"
+                            title="Bidirectional Encoder Representations Machine Learning Model"
+                            value="Use BERT Model"
                         />
                         <input
                             className="button"
                             type="submit"
                             id="button2"
-                            value="Check With Model Two"
+                            value="Use LSTM Model"
+                            title="Long short-term memory Machine Learning Model"
                         />
                     </div>
                 </form>

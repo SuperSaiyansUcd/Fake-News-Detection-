@@ -8,20 +8,20 @@ export default function Result() {
     const location = useLocation();
     const title = location.state.title;
     const content = location.state.content;
- 
+
     const navigate = useNavigate();
-    const toHome = (e) => {  
+    const toHome = (e) => {
         e.preventDefault();
         localStorage.setItem('title', title);
         if (title === null || title.trim().length === 0) {
             localStorage.setItem('title', 'N/A');
         }
         localStorage.setItem('content', content);
-        if (content !== "") { 
-            navigate('/');   
+        if (content !== "") {
+            navigate('/');
         }
     };
-    
+
     const [data, setData] = useState({});
 
     useEffect(() => {
@@ -32,25 +32,25 @@ export default function Result() {
             },
             body: JSON.stringify({ title, content }),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            setData(data);
-            console.log(data);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data);
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }, [title, content]);
 
 
     const [showComponent, setShowComponent] = useState(false);
     useEffect(() => {
-        const delay = 65; 
+        const delay = 65;
         const timer = setTimeout(() => {
-          setShowComponent(true);
+            setShowComponent(true);
         }, delay);
         return () => clearTimeout(timer); // Clean up the timer on unmount
-      }, []);
+    }, []);
 
 
 
@@ -70,11 +70,11 @@ export default function Result() {
     const resultText = isFake
         ? 'This is very likely fake news'
         : conditionMap
-              .reverse()
-              .find(({ range }) => {
-                  const [min, max] = range;
-                  return truthfulnessScore >= min && truthfulnessScore <= max;
-              })?.text || 'Error - Currently unable to judge the article\'s authenticity';
+            .reverse()
+            .find(({ range }) => {
+                const [min, max] = range;
+                return truthfulnessScore >= min && truthfulnessScore <= max;
+            })?.text || 'Error - Currently unable to judge the article\'s authenticity';
 
     if (!showComponent) {
         return null;
@@ -92,13 +92,21 @@ export default function Result() {
             </ul>
         </div>
         <div className='resultPage'>
+            <div className="dropdown">
+                <button>☰</button>
+                <div className="dropdown-content">
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                        target="_blank">Feedback</a>
+                    <a href="/credits">Credits</a>
+                </div>
+            </div>
             <div className='part1'>
             <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold'  }}>{resultText}</h2>
                 <LineSpectrum value={truthfulnessScore} />
             </div>
             <div className='part2'>
                 <h2>{resultText}</h2>
-                <RadarCharts/>
+                <RadarCharts />
             </div>
             <div className='part3'>
                 <p>- Title -</p>
@@ -108,11 +116,11 @@ export default function Result() {
             </div>
             <div className='part3'>
                 <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
-                    target="_blank"><button className='button'>Give Feedback</button></a> 
-                <button className='button' onClick={ toHome }>Return Home</button>
+                    target="_blank"><button className='button'>Give Feedback</button></a>
+                <button className='button' onClick={toHome}>Return Home</button>
             </div>
-            
+
         </div>
-        </>
+    </>
     );
 }

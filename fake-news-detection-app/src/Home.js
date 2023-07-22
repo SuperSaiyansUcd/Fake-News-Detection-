@@ -126,7 +126,13 @@ export default function Home() {
                             onChange={(e) => setUrl(e.target.value)}
                             className="input-box"
                         />
-                        <button className="url-submit-button" type="submit">Submit URL</button>
+                        <input
+                            className="button"
+                            type="submit"
+                            id="button1"
+                            title="Bidirectional Encoder Representations Machine Learning Model"
+                            value="Submit URL"
+                        />
                     </div>
 
 
@@ -149,7 +155,7 @@ export default function Home() {
                             type="text"
                             onChange={e => setContent(e.target.value)}
                             className={error ? "error" : "input-box"}
-                            placeholder="cannot be empty"
+                            placeholder="Enter Content"
                         />
                     </div>
                     <div>

@@ -66,6 +66,13 @@ export default function Home() {
 
     }, []);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle the URL and perform necessary actions (e.g., validation)
+        // For simplicity, we'll just navigate back to the Home page with the URL as state.
+        navigate('/', { state: { url } });
+      };
+
     const scrollToLast = () => {
         window.scrollTo({
             top: 1500,
@@ -111,13 +118,16 @@ export default function Home() {
             <section id="section2" className="section">
                 <form onSubmit={toResult}>
                     <div>
-                        <label htmlFor="inbox0">U R L</label>
-                        <input
-                            value={url}
-                            type="text"
-                            onChange={e => setUrl(e.target.value)}
-                            className="input-box"
-                        />
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor="urlInput">Paste URL:</label>
+                            <input
+                                type="text"
+                                id="urlInput"
+                                value={url}
+                                onChange={(e) => setUrl(e.target.value)}
+                            />
+                            <button type="submit">Submit</button>
+                        </form>
                     </div>
                     <div>
                         <label htmlFor="inbox1">T I T L E</label>

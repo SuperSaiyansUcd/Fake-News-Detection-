@@ -1,0 +1,71 @@
+.resultPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(../public/result.jpg);
+    background-size: cover;
+    overflow-y: hidden;
+    height: 100vh; 
+    width: 100vw;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    overflow: auto;
+    position: relative;
+    z-index: 1; 
+  }
+  
+  .resultPage::before {
+    content: '';
+    background-image: url(../public/result.jpg);
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: blur(5px);
+    z-index: -1;
+  }  
+  
+  .resultPage .part2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 35px;
+  }
+  
+  .resultPage .part2 h2{
+    padding-right: 10vw;
+  }
+  
+  .resultPage .part3 p{
+    text-align: left;
+    padding-left: 5px;
+  }
+  
+  .resultPage .part3 .box1, .resultPage .part3 .box2{
+    background-color: #eff2f5;
+    border-radius: 2.5px;
+    opacity: 0.88;
+    padding: 5px 11px;
+    overflow-wrap: break-word;
+    color: black;
+  }
+  
+  .resultPage .part3 .box1{
+    min-height: 14px;
+  }
+  
+  .resultPage .part3 .box2{
+    min-height: 150px;
+  }
+  
+  .resultPage .button {
+    opacity: 0.6;
+    margin-bottom: 20px;
+  }
+  
+  .resultPage .button:hover {
+    border-color: #e8e6e6;
+  } 

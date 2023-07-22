@@ -4,12 +4,28 @@
     align-items: center;
     background-image: url(../public/result.jpg);
     background-size: cover;
-    overflow-y: scroll;
+    overflow-y: hidden;
     height: 100vh; 
-    width: 100vi;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 100vw;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: white;
+    overflow: auto;
+    position: relative;
+    z-index: 1; 
   }
+  
+  .resultPage::before {
+    content: '';
+    background-image: url(../public/result.jpg);
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: blur(5px);
+    z-index: -1;
+  }  
   
   .resultPage .part2 {
     display: flex;

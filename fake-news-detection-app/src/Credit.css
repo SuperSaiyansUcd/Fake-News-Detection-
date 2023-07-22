@@ -5,16 +5,31 @@
     align-items: center;
     background-image: url(../public/credits.jpg);
     background-size: cover;
-    overflow-y: scroll;
-    height: 100vh; 
-    width: 100vi;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: white;
+    overflow-y: hidden;
+    height: 100vh;
+    width: 100vw; 
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    position: relative;
+    z-index: 0;
+  }
+  
+  .creditsPage::before {
+    content: '';
+    background-image: url(../public/credits.jpg);
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    filter: blur(5px);
+    z-index: -1;
   }
   
   .creditsPage .part1 {
     margin-top: 100px;
   }
+
   .creditsPage .part3 {
     margin-bottom: 100px;
   }

@@ -46,6 +46,17 @@ def preprocess_text(text):
     return preprocessed_text
 
 
+@app.route('/api/webscrap', methods=['POST'])
+def submit_URL():
+    # Handle POST request
+    url = request.json.get('url')
+
+    response = {
+        'message': 'urly :)',
+    }
+    return jsonify(response), 200
+
+
 @app.route('/api/submit', methods=['POST'])
 def submit_data():
     # Handle POST request

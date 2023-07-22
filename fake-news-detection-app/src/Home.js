@@ -8,6 +8,8 @@ const Home = () => {
     const [content, setContent] = useState('');
     const [url, setUrl] = useState('');
     const [error, setError] = useState(false);
+    const [urlError, setUrlError] = useState(false);
+
     const navigate = useNavigate();
 
     const toResult = (e) => {
@@ -18,6 +20,24 @@ const Home = () => {
         } else {
             setError(false);
             axios.post('http://127.0.0.1:5000/api/submit', { title, content })
+                .then((response) => {
+                    navigate('/result', { state: { title, content } });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    };
+
+    const toUrlResult = (e) => {
+        e.preventDefault();
+
+        if (url === null || url.trim().length === 0) {
+            setUrlError(true);
+        } else {
+            // get api soup webscrapping data from backend
+            setUrlError(false);
+            axios.post('http://127.0.0.1:5000/api/webscrap', { title, content })
                 .then((response) => {
                     navigate('/result', { state: { title, content } });
                 })
@@ -56,11 +76,6 @@ const Home = () => {
         };
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        navigate('/', { state: { url } });
-    };
-
     const scrollToLast = () => {
         window.scrollTo({
             top: 1500,
@@ -91,7 +106,7 @@ const Home = () => {
                 </div>
             </section>
             <section id="section2" className="section">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={toUrlResult}>
                     <div className="form-container">
                         <label htmlFor="urlInput">P A S T E  -  U R L:</label>
                         <input
@@ -99,7 +114,7 @@ const Home = () => {
                             id="urlInput"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            className="input-box"
+                            className={urlError ? "error" : "input-box"}
                         />
                         <input
                             className="button"

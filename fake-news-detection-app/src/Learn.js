@@ -27,7 +27,9 @@ export default function Learn() {
                 <ul>
                     <h2>Learn More</h2>
                     <h4>Model Types</h4>
-                    <li>Long Short-Term Memory (LSTM): This is a type of recurrent neural network that solves the <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem" target="_blank"><u>vanishing gradient problem</u> &rarr;</a></li>
+                    <li>Long Short-Term Memory (LSTM): This is a type of recurrent neural network that solves the <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem"
+                        target="_blank" rel="noopener noreferrer">
+                        <u>vanishing gradient problem</u> &rarr;</a></li>
                     <br></br>
                     <li>An Ensemble("together") Model is a machine learning model that combines the predicitions of multiple models to achieve better performance </li>
                     <br></br>

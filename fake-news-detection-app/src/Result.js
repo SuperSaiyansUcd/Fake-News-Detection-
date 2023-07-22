@@ -81,16 +81,6 @@ export default function Result() {
     }
 
     return (<>
-        <div id="menuToggle">
-            <input type="checkbox" />
-            <span></span>
-            <span></span>
-            <span></span>
-            <ul id="menu">
-                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Info</li></a>
-                <a href="credits"><li>Credits</li></a>
-            </ul>
-        </div>
         <div className='resultPage'>
             <div className="dropdown">
                 <button>☰</button>

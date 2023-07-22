@@ -83,19 +83,6 @@ export default function Home() {
 
     return (
         <>
-
-<nav role="navigation">
-  <div id="menuToggle">
-    <input type="checkbox" />
-    <span></span>
-    <span></span>
-    <span></span>
-    <ul id="menu">
-      <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"><li>Give Feedback</li></a>
-      <a href="Credits"><li>Credits</li></a>
-    </ul>
-  </div>
-</nav>
             <section id="section1" className="section">
                 <div className="dropdown">
                     <button>☰</button>

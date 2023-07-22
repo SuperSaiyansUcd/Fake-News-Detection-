@@ -19,6 +19,11 @@ const Home = () => {
             setError(true);
         } else {
             setError(false);
+            // Save the form values to localStorage before navigating to the result page
+            localStorage.setItem('title', title);
+            localStorage.setItem('content', content);
+
+            // Navigate to the result page
             axios.post('http://127.0.0.1:5000/api/submit', { title, content })
                 .then((response) => {
                     navigate('/result', { state: { title, content } });
@@ -50,31 +55,13 @@ const Home = () => {
     useEffect(() => {
         const storedTitle = localStorage.getItem('title');
         const storedContent = localStorage.getItem('content');
-        if (storedTitle !== null || storedContent !== null) {
+        if (storedTitle !== null) {
             setTitle(storedTitle);
+        }
+        if (storedContent !== null) {
             setContent(storedContent);
         }
-    }, []);
-
-    useEffect(() => {
-        localStorage.setItem('title', title);
-        localStorage.setItem('content', content);
-    }, [title, content]);
-
-    useEffect(() => {
-        const handleBeforeUnload = (e) => {
-            e.preventDefault();
-            e.returnValue = '';
-            localStorage.removeItem('title');
-            localStorage.removeItem('content');
-        };
-
-        window.addEventListener('beforeunload', handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, []);
+    }, []); // Only run this effect on initial render
 
     const scrollToLast = () => {
         window.scrollTo({

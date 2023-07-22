@@ -104,7 +104,7 @@ export default function Result() {
                 <p className='box2'>{content}</p>
             </div>
             <div className='part3'>
-                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"target="_blank">
+                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank">
                     <button className='button'>Give Feedback</button></a>
                 <button className='button' onClick={toHome}>Return Home</button>
             </div>

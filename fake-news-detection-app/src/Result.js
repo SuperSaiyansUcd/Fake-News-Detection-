@@ -49,7 +49,7 @@ export default function Result() {
         const timer = setTimeout(() => {
             setShowComponent(true);
         }, delay);
-        return () => clearTimeout(timer); // Clean up the timer on unmount
+        return () => clearTimeout(timer);
     }, []);
 
 

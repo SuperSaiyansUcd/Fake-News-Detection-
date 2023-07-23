@@ -8,6 +8,8 @@ import numpy as np
 from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -50,11 +52,16 @@ def preprocess_text(text):
 def submit_URL():
     # Handle POST request
     url = request.json.get('url')
-
-    response = {
-        'message': 'urly :)',
-    }
-    return jsonify(response), 200
+    text_content = ""
+    response = requests.get(url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        text_content = soup.get_text()
+        text_content = text_content.strip()
+    else:
+        text_content = "URL empty"
+    print(text_content)
+    return text_content, 200
 
 
 @app.route('/api/submit', methods=['POST'])

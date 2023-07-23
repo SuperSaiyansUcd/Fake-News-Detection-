@@ -108,3 +108,23 @@
     border: 2px solid red;
   }
   
+  .errorUrl {
+    width: 75vw;
+    border: 2px solid red;
+    position: relative;
+  }
+  
+  .errorUrl::before {
+    content: "Invalid URL";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  

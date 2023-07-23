@@ -13,9 +13,9 @@ export default function Result() {
     const toHome = (e) => {
         e.preventDefault();
         localStorage.setItem('title', title);
-        if (title === null || title.trim().length === 0) {
-            localStorage.setItem('title', 'N/A');
-        }
+        // if (title === null || title.trim().length === 0) {
+        //     localStorage.setItem('title', 'N/A');
+        // }
         localStorage.setItem('content', content);
         if (content !== "") {
             navigate('/');

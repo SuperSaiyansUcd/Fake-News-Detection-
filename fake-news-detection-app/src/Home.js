@@ -9,6 +9,8 @@ const Home = () => {
     const [url, setUrl] = useState('');
     const [error, setError] = useState(false);
     const [urlError, setUrlError] = useState(false);
+    const [apiError, setApiError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -19,11 +21,9 @@ const Home = () => {
             setError(true);
         } else {
             setError(false);
-            // Save the form values to localStorage before navigating to the result page
             localStorage.setItem('title', title);
             localStorage.setItem('content', content);
 
-            // Navigate to the result page
             axios.post('http://127.0.0.1:5000/api/submit', { title, content })
                 .then((response) => {
                     navigate('/result', { state: { title, content } });
@@ -40,14 +40,26 @@ const Home = () => {
         if (url === null || url.trim().length === 0) {
             setUrlError(true);
         } else {
-            // get api soup webscrapping data from backend
             setUrlError(false);
-            axios.post('http://127.0.0.1:5000/api/webscrap', { title, content })
+            setApiError(false);
+            setLoading(true);
+
+            axios.post('http://127.0.0.1:5000/api/webscrap', { url })
                 .then((response) => {
-                    navigate('/result', { state: { title, content } });
+                    if (response) {
+                        setContent(response.data);
+                    } else {
+                        setApiError(true);
+                        setUrlError(true);
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
+                    setApiError(true);
+                    setUrlError(true);
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
         }
     };
@@ -61,7 +73,7 @@ const Home = () => {
         if (storedContent !== null) {
             setContent(storedContent);
         }
-    }, []); // Only run this effect on initial render
+    }, []);
 
     const scrollToLast = () => {
         window.scrollTo({
@@ -77,7 +89,6 @@ const Home = () => {
                     <button>☰</button>
                     <div className="dropdown-content">
                         <a href="/">Home</a>
-
                         <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
                         <a href="/learn">Learn More</a>
                         <a href="/credits">Credits</a>
@@ -87,7 +98,7 @@ const Home = () => {
                     <div className="try-it-out-banner">
                         <h1 onClick={scrollToLast} className="animated-heading">
                             Fake News Detector
-                            <button onClick={scrollToLast}>Try it out !</button>
+                            <button onClick={scrollToLast}>Try it out!</button>
                         </h1>
                     </div>
                 </div>
@@ -101,8 +112,9 @@ const Home = () => {
                             id="urlInput"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            className={urlError ? "error" : "input-box"}
+                            className={urlError ? "errorUrl" : "input-box"}
                         />
+                        {urlError ? <div className="error-message">Invalid URL</div> : null}
                         <input
                             className="button"
                             type="submit"
@@ -110,6 +122,7 @@ const Home = () => {
                             title="Get Text from URL via web scraping"
                             value="Get Text from URL"
                         />
+                        {loading ? <div className="loading-spinner">Loading...</div> : null}
                     </div>
                 </form>
                 <form onSubmit={toResult}>
@@ -154,6 +167,7 @@ const Home = () => {
                     &copy; 2023 SuperSaiyans. All rights reserved.
                 </footer>
             </section>
+            {apiError && <div className="error-message">Error: Invalid response from the API.</div>}
         </>
     );
 };

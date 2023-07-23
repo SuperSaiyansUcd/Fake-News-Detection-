@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Home.css';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
     const [title, setTitle] = useState('');
@@ -14,8 +16,25 @@ const Home = () => {
 
     const navigate = useNavigate();
 
+    const ModelEnum = {
+        BERT: "BERT",
+        ENSEMBLE: "ENSEMBLE",
+        LSTM: "LSTM"
+    };
+
     const toResult = (e) => {
         e.preventDefault();
+
+        const selectedButton = e.nativeEvent.submitter.id;
+        let modelParam;
+
+        if (selectedButton === "button1") {
+            modelParam = ModelEnum.LSTM;
+        } else if (selectedButton === "button2") {
+            modelParam = ModelEnum.ENSEMBLE;
+        }
+        // to remove debug print 
+        console.log(modelParam);
 
         if (content === null || content.trim().length === 0) {
             setError(true);
@@ -24,9 +43,10 @@ const Home = () => {
             localStorage.setItem('title', title);
             localStorage.setItem('content', content);
 
-            axios.post('http://127.0.0.1:5000/api/submit', { title, content })
+            console.log("Request Body:", { title, content, modelParam });
+            axios.post('http://127.0.0.1:5000/api/submit', { title, content, modelParam }, { headers: { 'Content-Type': 'application/json' } })
                 .then((response) => {
-                    navigate('/result', { state: { title, content } });
+                    navigate('/result', { state: { title, content, modelParam } });
                 })
                 .catch((error) => {
                     console.error(error);
@@ -48,7 +68,7 @@ const Home = () => {
                 .then((response) => {
                     if (response) {
                         setContent(response.data.text_content);
-                    } 
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -148,16 +168,19 @@ const Home = () => {
                             className="button"
                             type="submit"
                             id="button1"
-                            title="Bidirectional Encoder Representations Machine Learning Model"
-                            value="Use BERT Model"
+                            value="Use LSTM Model"
+                            title="Long short-term memory Machine Learning Model"
                         />
                         <input
                             className="button"
                             type="submit"
                             id="button2"
-                            value="Use LSTM Model"
-                            title="Long short-term memory Machine Learning Model"
+                            value="Use Ensemble Model"
+                            title="Ensemble Machine Learning Model"
                         />
+                        <Link to="/learn" className="learn-more-link">
+                            <span role="img" aria-label="Learn More">&#9432;</span>
+                        </Link>
                     </div>
                 </form>
                 <footer>

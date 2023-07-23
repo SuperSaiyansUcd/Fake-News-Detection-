@@ -10,6 +10,7 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 import requests
 from bs4 import BeautifulSoup
+import pickle
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -20,29 +21,21 @@ def home():
 
 @app.route('/favicon.ico')
 def favicon():
-    # Return the favicon file here
-    # You can also just return an empty response (no favicon) to get rid of the 404 error.
     return ''
 
 
 def preprocess_text(text):
-    # Convert text to lowercase
     text = text.lower()
 
-    # Remove URLs
     text = re.sub(r"http\S+|www\S+|https\S+", "", text, flags=re.MULTILINE)
 
-    # Remove special characters and numbers
     text = re.sub(r"[^\w\s]", "", text)
     text = re.sub(r"\d+", "", text)
 
-    # Tokenize the text
     tokens = word_tokenize(text)
 
-    # Remove stop words
     tokens = [token for token in tokens if token not in stop_words]
 
-    # Join the tokens back into a single string
     preprocessed_text = " ".join(tokens)
 
     return preprocessed_text
@@ -50,12 +43,11 @@ def preprocess_text(text):
 
 @app.route('/api/webscrap', methods=['POST'])
 def submit_URL():
-    # Handle POST request
     url = request.json.get('url')
     text_content = ""
     try:
         response = requests.get(url)
-        response.raise_for_status()  # Check if there was an error with the request
+        response.raise_for_status()
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
             text_content = soup.get_text()
@@ -63,41 +55,46 @@ def submit_URL():
         else:
             text_content = "URL empty"
     except requests.exceptions.RequestException as e:
-        # If there's an error with the request, print the error message and return a 500 response
         print("Error fetching the URL:", e)
         return jsonify({"error": "Failed to fetch the URL"}), 500
 
-    print("Scraped text content:", text_content)  # Debug statement to check the scraped content
+    print("Scraped text content:", text_content) 
     return jsonify({"text_content": text_content}), 200
 
 
 
 @app.route('/api/submit', methods=['POST'])
 def submit_data():
-    # Handle POST request
-    title = request.json.get('title')
-    content = request.json.get('content')
+    data = request.json  
+    modelParam = data.get('modelParam') 
 
-    # Process the form data
+    model = Bidirectional_LSTM_model
+    max_seq_length = max_seq_length_model
+    if modelParam == "LSTM":
+        model = ensemble_model
+        max_seq_length = max_seq_length_lstm
+
+    title = data.get('title')
+    content = data.get('content')
+    
+    
     preprocessed_content = preprocess_text(content)
 
-    # Tokenize and pad the text
     tokenizer.fit_on_texts([preprocessed_content])
     text_sequence = tokenizer.texts_to_sequences([preprocessed_content])
     text_sequence = pad_sequences(text_sequence, maxlen=max_seq_length)
 
-    # Make predictions
     prediction = model.predict(text_sequence)
     is_fake = int(prediction[0][0] > 0.5)
 
-    # Print debug statements
-    print("Title:", title)
-    print("Content:", content)
-    print("Preprocessed Content:", preprocessed_content)
-    print("Prediction:", prediction)
-    print("Is Fake:", is_fake)
+    # debug prints
+    # print("Title:", title)
+    # print("Content:", content)
+    # print("Preprocessed Content:", preprocessed_content)
+    # print("Prediction:", prediction)
+    # print("Is Fake:", is_fake)
+    # print("using ", model, "Model type")
 
-    # Return the prediction and sentiment analysis score
     response = {
         'message': 'Form data received :)',
         'title': title,
@@ -110,9 +107,15 @@ def submit_data():
 
 if __name__ == "__main__":
     # Load the saved model
-    model = load_model('model.h5')
+    ensemble_model = load_model('model.h5')
+    Bidirectional_LSTM_model = load_model('Bi_dir_LSTM_model.h5')
+    ensemble_model.summary()
+    Bidirectional_LSTM_model.summary()
+
     tokenizer = Tokenizer()
-    max_seq_length = 49  # Define the maximum sequence length used during training
+    max_seq_length_model = 100 
+    max_seq_length_lstm = 49
+
 
     nltk.download('stopwords')
     nltk.download('punkt')

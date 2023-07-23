@@ -7,7 +7,7 @@ from nltk.tokenize import word_tokenize
 import numpy as np
 import joblib
 from keras.models import load_model
-from keras_preprocessing.sequence import pad_sequences
+from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 
 app = Flask(__name__)

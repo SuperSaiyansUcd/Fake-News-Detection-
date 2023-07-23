@@ -100,6 +100,7 @@ export default function Result() {
             <div className='part2'>
                 <h2>{resultText}</h2>
                 {/* to edit radar chart inputs */}
+                {/* MAKE SURE TO SCALE VALUES */}
                 <RadarCharts Precision={1} Score={3} Recall={2} Accuracy={2} />
                 <Link to="/learn" className="learn-more-link">
                     <span role="img" aria-label="Learn More">&#9432;</span>

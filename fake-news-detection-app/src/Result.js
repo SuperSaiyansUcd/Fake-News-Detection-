@@ -2,7 +2,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import LineSpectrum from './components/LineSpectrum';
 import { useState, useEffect } from "react";
 import RadarCharts from './components/RadarChart';
-import './Results.css'; // Import the CSS file
+import './Results.css';
+import { Link } from 'react-router-dom';
 
 export default function Result() {
     const location = useLocation();
@@ -13,9 +14,6 @@ export default function Result() {
     const toHome = (e) => {
         e.preventDefault();
         localStorage.setItem('title', title);
-        // if (title === null || title.trim().length === 0) {
-        //     localStorage.setItem('title', 'N/A');
-        // }
         localStorage.setItem('content', content);
         if (content !== "") {
             navigate('/');
@@ -99,6 +97,9 @@ export default function Result() {
             <div className='part2'>
                 <h2>{resultText}</h2>
                 <RadarCharts />
+                <Link to="/learn" className="learn-more-link">
+                    <span role="img" aria-label="Learn More">&#9432;</span>
+                </Link>
             </div>
             <div className='part3'>
                 <p>- Title -</p>

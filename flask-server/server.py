@@ -58,7 +58,6 @@ def submit_URL():
         print("Error fetching the URL:", e)
         return jsonify({"error": "Failed to fetch the URL"}), 500
 
-    print("Scraped text content:", text_content) 
     return jsonify({"text_content": text_content}), 200
 
 
@@ -88,12 +87,12 @@ def submit_data():
     is_fake = int(prediction[0][0] > 0.5)
 
     # debug prints
-    # print("Title:", title)
-    # print("Content:", content)
-    # print("Preprocessed Content:", preprocessed_content)
-    # print("Prediction:", prediction)
-    # print("Is Fake:", is_fake)
-    # print("using ", model, "Model type")
+    print("Title:", title)
+    print("Content:", content)
+    print("Preprocessed Content:", preprocessed_content)
+    print("Prediction:", prediction)
+    print("Is Fake:", is_fake)
+    print("using ", model, "Model type")
 
     response = {
         'message': 'Form data received :)',

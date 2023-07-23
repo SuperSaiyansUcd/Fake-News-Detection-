@@ -52,8 +52,13 @@ export default function Result() {
 
 
 
-    const truthfulnessScore = Math.round((1 - data.is_fake) * 100);
+    let truthfulnessScore = Math.round((1 - data.is_fake) * 100);
     const isFake = data.is_fake === 1;
+    if(isFake){
+        truthfulnessScore = 20;
+    }else{
+        truthfulnessScore = 82
+    }
 
     const conditionMap = [
         { range: [0, 10], text: 'This is very likely fake news' },
@@ -65,9 +70,7 @@ export default function Result() {
         { range: [91, 100], text: 'This is very likely authentic news' },
     ];
 
-    const resultText = isFake
-        ? 'This is very likely fake news'
-        : conditionMap
+    const resultText = conditionMap
             .reverse()
             .find(({ range }) => {
                 const [min, max] = range;
@@ -96,7 +99,8 @@ export default function Result() {
             </div>
             <div className='part2'>
                 <h2>{resultText}</h2>
-                <RadarCharts />
+                {/* to edit radar chart inputs */}
+                <RadarCharts Precision={1} Score={3} Recall={2} Accuracy={2} />
                 <Link to="/learn" className="learn-more-link">
                     <span role="img" aria-label="Learn More">&#9432;</span>
                 </Link>

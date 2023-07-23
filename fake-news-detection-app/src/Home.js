@@ -47,11 +47,8 @@ const Home = () => {
             axios.post('http://127.0.0.1:5000/api/webscrap', { url })
                 .then((response) => {
                     if (response) {
-                        setContent(response.data);
-                    } else {
-                        setApiError(true);
-                        setUrlError(true);
-                    }
+                        setContent(response.data.text_content);
+                    } 
                 })
                 .catch((error) => {
                     console.error(error);

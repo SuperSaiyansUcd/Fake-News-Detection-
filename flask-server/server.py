@@ -53,15 +53,23 @@ def submit_URL():
     # Handle POST request
     url = request.json.get('url')
     text_content = ""
-    response = requests.get(url)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
-        text_content = soup.get_text()
-        text_content = text_content.strip()
-    else:
-        text_content = "URL empty"
-    print(text_content)
-    return text_content, 200
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check if there was an error with the request
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            text_content = soup.get_text()
+            text_content = text_content.strip()
+        else:
+            text_content = "URL empty"
+    except requests.exceptions.RequestException as e:
+        # If there's an error with the request, print the error message and return a 500 response
+        print("Error fetching the URL:", e)
+        return jsonify({"error": "Failed to fetch the URL"}), 500
+
+    print("Scraped text content:", text_content)  # Debug statement to check the scraped content
+    return jsonify({"text_content": text_content}), 200
+
 
 
 @app.route('/api/submit', methods=['POST'])

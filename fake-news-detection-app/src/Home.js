@@ -8,6 +8,10 @@ const Home = () => {
     const [content, setContent] = useState('');
     const [url, setUrl] = useState('');
     const [error, setError] = useState(false);
+    const [urlError, setUrlError] = useState(false);
+    const [apiError, setApiError] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const toResult = (e) => {
@@ -17,6 +21,9 @@ const Home = () => {
             setError(true);
         } else {
             setError(false);
+            localStorage.setItem('title', title);
+            localStorage.setItem('content', content);
+
             axios.post('http://127.0.0.1:5000/api/submit', { title, content })
                 .then((response) => {
                     navigate('/result', { state: { title, content } });
@@ -27,39 +34,46 @@ const Home = () => {
         }
     };
 
+    const toUrlResult = (e) => {
+        e.preventDefault();
+
+        if (url === null || url.trim().length === 0) {
+            setUrlError(true);
+        } else {
+            setUrlError(false);
+            setApiError(false);
+            setLoading(true);
+
+            axios.post('http://127.0.0.1:5000/api/webscrap', { url })
+                .then((response) => {
+                    if (response) {
+                        setContent(response.data);
+                    } else {
+                        setApiError(true);
+                        setUrlError(true);
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    setApiError(true);
+                    setUrlError(true);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
+    };
+
     useEffect(() => {
         const storedTitle = localStorage.getItem('title');
         const storedContent = localStorage.getItem('content');
-        if (storedTitle !== null || storedContent !== null) {
+        if (storedTitle !== null) {
             setTitle(storedTitle);
+        }
+        if (storedContent !== null) {
             setContent(storedContent);
         }
     }, []);
-
-    useEffect(() => {
-        localStorage.setItem('title', title);
-        localStorage.setItem('content', content);
-    }, [title, content]);
-
-    useEffect(() => {
-        const handleBeforeUnload = (e) => {
-            e.preventDefault();
-            e.returnValue = '';
-            localStorage.removeItem('title');
-            localStorage.removeItem('content');
-        };
-
-        window.addEventListener('beforeunload', handleBeforeUnload);
-
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, []);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        navigate('/', { state: { url } });
-    };
 
     const scrollToLast = () => {
         window.scrollTo({
@@ -75,7 +89,6 @@ const Home = () => {
                     <button>☰</button>
                     <div className="dropdown-content">
                         <a href="/">Home</a>
-
                         <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
                         <a href="/learn">Learn More</a>
                         <a href="/credits">Credits</a>
@@ -85,13 +98,13 @@ const Home = () => {
                     <div className="try-it-out-banner">
                         <h1 onClick={scrollToLast} className="animated-heading">
                             Fake News Detector
-                            <button onClick={scrollToLast}>Try it out !</button>
+                            <button onClick={scrollToLast}>Try it out!</button>
                         </h1>
                     </div>
                 </div>
             </section>
             <section id="section2" className="section">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={toUrlResult}>
                     <div className="form-container">
                         <label htmlFor="urlInput">P A S T E  -  U R L:</label>
                         <input
@@ -99,8 +112,9 @@ const Home = () => {
                             id="urlInput"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
-                            className="input-box"
+                            className={urlError ? "errorUrl" : "input-box"}
                         />
+                        {urlError ? <div className="error-message">Invalid URL</div> : null}
                         <input
                             className="button"
                             type="submit"
@@ -108,6 +122,7 @@ const Home = () => {
                             title="Get Text from URL via web scraping"
                             value="Get Text from URL"
                         />
+                        {loading ? <div className="loading-spinner">Loading...</div> : null}
                     </div>
                 </form>
                 <form onSubmit={toResult}>
@@ -152,6 +167,7 @@ const Home = () => {
                     &copy; 2023 SuperSaiyans. All rights reserved.
                 </footer>
             </section>
+            {apiError && <div className="error-message">Error: Invalid response from the API.</div>}
         </>
     );
 };

@@ -1,83 +1,120 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import LineSpectrum from './components/LineSpectrum';
-import { useState, useEffect } from 'react';
-import RadarChart from './components/RadarChart';
+import { useState, useEffect } from "react";
+import RadarCharts from './components/RadarChart';
 import './Results.css';
+import { Link } from 'react-router-dom';
 
 export default function Result() {
-  const location = useLocation();
-  const title = location.state?.title || '';
-  const content = location.state?.content || '';
+    const location = useLocation();
+    const title = location.state.title;
+    const content = location.state.content;
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const toHome = (e) => {
+        e.preventDefault();
+        localStorage.setItem('title', title);
+        localStorage.setItem('content', content);
+        if (content !== "") {
+            navigate('/');
+        }
+    };
 
-  const [data, setData] = useState({});
-  const [showComponent, setShowComponent] = useState(false);
+    const [sentimentScores, setSentimentScores] = useState([]);
+    const [data, setData] = useState({});
+    const [precision, setPrecision] = useState(0);
+    const [recall, setRecall] = useState(0);
+    const [accuracy, setAccuracy] = useState(0);
+    const [f1_score, setF1Score] = useState(0);
 
-  useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ title, content }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setShowComponent(true);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, [title, content]);
+    useEffect(() => {
+        fetch("http://127.0.0.1:5000/api/submit", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, content }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data);
+                setSentimentScores(data.sentiment_scores);
+                setData(data);
+                setPrecision(data.precision);
+                setRecall(data.recall);
+                setAccuracy(data.accuracy);
+                setF1Score(data.f1);
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, [title, content]);
 
-  const truthfulnessScore = Math.round((1 - data?.is_fake) * 100);
-  const isFake = data?.is_fake === 1;
-  const sentiment = data?.sentiment_score;
 
-  const conditionMap = {
-    0: { text: 'This is very likely fake news' },
-    1: { text: 'This is likely fake news' },
-    2: { text: 'This could be fake news' },
-    3: { text: 'Undetermined whether this is real or fake news' },
-    4: { text: 'This could be authentic news' },
-    5: { text: 'This is likely authentic news' },
-    6: { text: 'This is very likely authentic news' },
-  };
+    const [showComponent, setShowComponent] = useState(false);
+    useEffect(() => {
+        const delay = 65;
+        const timer = setTimeout(() => {
+            setShowComponent(true);
+        }, delay);
+        return () => clearTimeout(timer);
+    }, []);
 
-  const resultText = conditionMap[truthfulnessScore]?.text || "Error - Currently unable to judge the article's authenticity";
+    const truthfulnessScore = data.truthfulness_score;
 
-  const sentimentColor =
-    sentiment > 0.7
-      ? 'green'
-      : sentiment < 0.3
-      ? 'red'
-      : 'gray';
+    const isFake = truthfulnessScore < 0.5;
+    const resultText =
+    truthfulnessScore < 0.5
+      ? 'This is very likely fake news'
+      : 'This is very likely authentic news';
 
-  if (!showComponent) {
-    return null;
-  }
+    return (<>
+        <div className='resultPage'>
+            <div className="dropdown">
+                <button>☰</button>
+                <div className="dropdown-content">
+                    <a href="/">Home</a>
 
-  return (
-    <div className='resultPage'>
-      <div className='part1'>
-        <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>{resultText}</h2>
-        <LineSpectrum value={truthfulnessScore} />
-      </div>
-      <div className='part2'>
-        <h2 style={{ color: sentimentColor }}>Sentiment Analysis Score: {sentiment}</h2>
-        <RadarChart />
-      </div>
-      <div className='part3'>
-        <p>- Title -</p>
-        <p className='box1'>{title}</p>
-        <p>- Content -</p>
-        <p className='box2'>{content}</p>
-      </div>
-      <div className='part3'>
-        <button className='button' onClick={() => navigate('/')}>Return Home</button>
-      </div>
-    </div>
-  );
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
+                    <a href="/learn">Learn More</a>
+                    <a href="/credits">Credits</a>
+                </div>
+            </div>
+            <div className='part1'>
+                    <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>{resultText}</h2>
+                    <LineSpectrum value={truthfulnessScore*100} />
+                </div>
+                <div className='part2'>
+                    <h2>{resultText}</h2>
+                    {/* to edit radar chart inputs */}
+                    {/* MAKE SURE TO SCALE VALUES */}
+                    <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} />
+                    <Link to="/learn" className="learn-more-link">
+                        <span role="img" aria-label="Learn More">&#9432;</span>
+                    </Link>
+                </div>
+                <div className='part3'>
+                    <p>- Title -</p>
+                    <p className='box1'>{title}</p>
+                    <p>- Content -</p>
+                    <p className='box2'>{content}</p>
+                </div>
+                <div className='part3'>
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <button className='button'>Give Feedback</button></a>
+                    <button className='button' onClick={toHome}>Return Home</button>
+                </div>
+
+                <div className='sentiment-scores'>
+                    <h3>Sentiment Scores</h3>
+                    {sentimentScores.map((score, index) => (
+                        <p key={index}>Sentence {index + 1}: {score.toFixed(2)}</p>
+                    ))}
+                </div>
+            </div>
+        </>
+    );
 }

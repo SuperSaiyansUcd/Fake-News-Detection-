@@ -1,15 +1,27 @@
 {
-  "short_name": "Test App",
-  "name": "Create Test Sample",
-  "description": "Determine news test",
-  "version": "1.0.0",
-  "manifest_version": 3,
-  "action": {
-    "default_title": "My Test App",
-    "default_popup": "index.html",
+"name": "Fake News Detection",
+"version": "1.0.0",
+"manifest_version": 3,
+"description": "Send the selected text to Fake News Detection System",
+"permissions": [
+      "contextMenus",
+      "tabs",
+      "activeTab"
+],
+"background": {
+    "service_worker": "background.js",
+    "type": "module"
+},
+"action": {
     "default_icon": {
-      "16": "logo192.png",
-      "128": "logo512.png"
-    }
-  } 
+      "16": "Icon2-192.png",
+      "128": "Icon2-512.png"
+    },
+    "default_popup": "popup.html"
+   
+  },
+  "icons": {
+      "16": "Icon2-192.png",
+      "128": "Icon2-512.png"
+  }
 }

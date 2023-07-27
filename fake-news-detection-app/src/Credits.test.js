@@ -20,6 +20,9 @@ test('loads and displays', async () => {
 
   // assert that the alert message is correct using
   // toHaveTextContent, a custom matcher from jest-dom.
-  expect(screen.getByRole('heading')).toHaveTextContent('Credits')
-  expect(screen.getByRole('button')).toHaveTextContent('Return to home page')
+  const headings = screen.getAllByRole('heading');
+  const acknowledgementHeading = headings.find(heading => heading.textContent === 'Acknowledgements');
+  expect(acknowledgementHeading).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Acknowledgements' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Return to home page' })).toBeInTheDocument();
 })

@@ -13,27 +13,35 @@ from bs4 import BeautifulSoup
 import pickle
 from cleantext import clean
 
-cleaned_text = clean("your text",
-    fix_unicode=True,               # fix various unicode errors
-    to_ascii=True,                  # transliterate to closest ASCII representation
-    lower=True,                     # lowercase text
-    no_line_breaks=True,           # fully strip line breaks as opposed to only normalizing them
-    no_urls=True,                  # replace all URLs with a special token
-    no_emails=True,                # replace all email addresses with a special token
-    no_phone_numbers=True,         # replace all phone numbers with a special token
-    no_numbers=True,               # replace all numbers with a special token
-    no_digits=True,                # replace all digits with a special token
-    no_currency_symbols=True,      # replace all currency symbols with a special token
-    no_punct=True,                 # fully remove punctuation
-    replace_with_punct="",         # instead of removing punctuation, replace them with a special token
-    replace_with_url="<URL>",
-    replace_with_email="<EMAIL>",
-    replace_with_phone_number="<PHONE>",
-    replace_with_number="<NUMBER>",
-    replace_with_digit="0",
-    replace_with_currency_symbol="<CUR>",
-    lang="en"
-)
+def remove_comments(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    comments = soup.find_all(class_='comment')  # Replace 'class_' with the appropriate class or tag representing comments
+    for comment in comments:
+        comment.extract()
+    cleaned_text = soup.get_text(separator=' ')
+
+    cleaned_nocomments_body_text = clean(cleaned_text, 
+                    fix_unicode=True,               
+                    to_ascii=True,                  
+                    lower=True,                     
+                    no_line_breaks=True,            
+                    no_urls=True,                   
+                    no_emails=True,                 
+                    no_phone_numbers=True,          
+                    no_numbers=True,                
+                    no_digits=True,                 
+                    no_currency_symbols=True,       
+                    no_punct=True,                  
+                    replace_with_punct="",          
+                    replace_with_url="<URL>",
+                    replace_with_email="<EMAIL>",
+                    replace_with_phone_number="<PHONE>",
+                    replace_with_number="<NUMBER>",
+                    replace_with_digit="0",
+                    replace_with_currency_symbol="<CUR>",
+                    lang="en"                       
+                    )
+    return cleaned_nocomments_body_text
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -47,7 +55,7 @@ def favicon():
     return ''
 
 
-def preprocess_text(text):
+def clean_text(text):
     text = text.lower()
 
     text = re.sub(r"http\S+|www\S+|https\S+", "", text, flags=re.MULTILINE)
@@ -61,7 +69,9 @@ def preprocess_text(text):
 
     preprocessed_text = " ".join(tokens)
 
-    return preprocessed_text
+    processed_text = remove_comments(preprocessed_text)
+
+    return processed_text
 
 
 @app.route('/api/webscrap', methods=['POST'])
@@ -81,28 +91,7 @@ def submit_URL():
             data['title'] = title
 
             # Scrape main text content
-            body_text = soup.find('body').get_text()
-            body_text = clean(body_text, 
-                              fix_unicode=True,               
-                              to_ascii=True,                  
-                              lower=True,                     
-                              no_line_breaks=True,            
-                              no_urls=True,                   
-                              no_emails=True,                 
-                              no_phone_numbers=True,          
-                              no_numbers=True,                
-                              no_digits=True,                 
-                              no_currency_symbols=True,       
-                              no_punct=True,                  
-                              replace_with_punct="",          
-                              replace_with_url="<URL>",
-                              replace_with_email="<EMAIL>",
-                              replace_with_phone_number="<PHONE>",
-                              replace_with_number="<NUMBER>",
-                              replace_with_digit="0",
-                              replace_with_currency_symbol="<CUR>",
-                              lang="en"                       
-                             )
+            body_text = clean_text(soup.find('body').get_text())
             body_text = re.sub(r'\?.*$', '', body_text)
             main_text = body_text.strip() if body_text else "Text content not found"
             data['main_text'] = main_text
@@ -130,10 +119,8 @@ def submit_data():
 
     title = data.get('title')
     content = data.get('content')
-    
-    
-    preprocessed_content = preprocess_text(content)
 
+    preprocessed_content = clean_text(content)
     tokenizer.fit_on_texts([preprocessed_content])
     text_sequence = tokenizer.texts_to_sequences([preprocessed_content])
     text_sequence = pad_sequences(text_sequence, maxlen=max_seq_length)

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 
 const Home = () => {
@@ -13,6 +13,8 @@ const Home = () => {
     const [urlError, setUrlError] = useState(false);
     const [apiError, setApiError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [searchParams] = useSearchParams()
+
 
     const navigate = useNavigate();
 
@@ -85,10 +87,16 @@ const Home = () => {
     useEffect(() => {
         const storedTitle = localStorage.getItem('title');
         const storedContent = localStorage.getItem('content');
+        const queryContent = searchParams.get('text')
+
+
         if (storedTitle !== null) {
             setTitle(storedTitle);
         }
-        if (storedContent !== null) {
+        if(queryContent !== null) {
+            setContent(queryContent);
+        }
+        else if (storedContent !== null) {
             setContent(storedContent);
         }
     }, []);

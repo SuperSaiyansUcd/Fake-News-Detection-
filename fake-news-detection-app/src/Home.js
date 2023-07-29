@@ -99,8 +99,7 @@ const Home = () => {
         else if (storedContent !== null) {
             setContent(storedContent);
         }
-    }, []);
-
+    }, [searchParams]);
     const scrollToLast = () => {
         window.scrollTo({
             top: 1500,

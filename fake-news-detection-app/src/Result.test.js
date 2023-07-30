@@ -1,35 +1,65 @@
-// import react-testing methods
-import {render, screen} from '@testing-library/react'
-// userEvent library simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
-import userEvent from '@testing-library/user-event'
-// add custom jest matchers from jest-dom
+import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter, useLocation } from 'react-router-dom'; 
+import Result from './Result';
 import '@testing-library/jest-dom'
-// the component to test
-import Result from './Result'
-import { BrowserRouter } from 'react-router-dom';
 
-test('loads and displays greeting', async () => {
-    test('loads and displays greeting', async () => {
-    // setup
-    render(<BrowserRouter>
-        <Result url="/result" />
-    </BrowserRouter>)
+const titleText =  'Man found dead';
+const contentText = 'Man dead by parnell street';
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+      json: () => Promise.resolve({ title: titleText, content: contentText }),
+  })
+)
 
-    await screen.findByRole('heading')
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn(),
+}));
 
-    // get
-    const feedbackButton = screen.getByRole('button', {
-        name: 'Give Feedback',
-        title: 'Give Feedback Button',
+describe('Result component', () => {
+  const mockLocation = {
+    pathname: '/Result',
+    state: {
+      title: titleText,
+      content: contentText,
+    },
+  };
+
+  beforeEach(() => {
+    fetch.mockClear();
+    window.history.pushState(mockLocation.state, '', mockLocation.pathname);
+    useLocation.mockReturnValue(mockLocation);
+  });
+
+  it('displays correct title and content', async () => {
+    fetch.mockImplementationOnce(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ title: titleText, content: contentText }),
+      })
+    );
+
+    render(
+      <MemoryRouter>
+        <Result />
+      </MemoryRouter>,
+    );
+        await waitFor(() => {
+      expect(screen.getByText(titleText)).toBeInTheDocument();
+      expect(screen.getByText(contentText)).toBeInTheDocument();
+
+      expect(fetch).toHaveBeenCalledWith(
+        "http://127.0.0.1:5000/api/submit", 
+        expect.objectContaining({
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            title: 'Man found dead', 
+            content: 'Man dead by parnell street'
+          }),
+        })
+      );
     });
-    const homeButton = screen.getByRole('button', {
-        name : 'Return Home',
-        title: 'Return Home Button'
-    });
-
-    // assert
-    expect(feedbackButton).toBeInTheDocument();
-    expect(homeButton).toBeInTheDocument();
-
-})
-
+  });
+});

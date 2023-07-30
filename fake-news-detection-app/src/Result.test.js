@@ -9,13 +9,27 @@ import Result from './Result'
 import { BrowserRouter } from 'react-router-dom';
 
 test('loads and displays greeting', async () => {
-    // render(<BrowserRouter><Result /></BrowserRouter>)
-  
-    // fireEvent.click(screen.getByText('Result'))
-  
-    // await screen.findByRole('heading')
-  
-    // expect(screen.getByRole('heading')).toHaveTextContent('Result')
-    // expect(screen.getByRole('button')).toBeDisabled()
+    test('loads and displays greeting', async () => {
+    // setup
+    render(<BrowserRouter>
+        <Result url="/result" />
+    </BrowserRouter>)
+
+    await screen.findByRole('heading')
+
+    // get
+    const feedbackButton = screen.getByRole('button', {
+        name: 'Give Feedback',
+        title: 'Give Feedback Button',
+    });
+    const homeButton = screen.getByRole('button', {
+        name : 'Return Home',
+        title: 'Return Home Button'
+    });
+
+    // assert
+    expect(feedbackButton).toBeInTheDocument();
+    expect(homeButton).toBeInTheDocument();
+})
 })
 

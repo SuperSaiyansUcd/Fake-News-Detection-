@@ -30,6 +30,6 @@ test('loads and displays greeting', async () => {
     // assert
     expect(feedbackButton).toBeInTheDocument();
     expect(homeButton).toBeInTheDocument();
-})
+
 })
 

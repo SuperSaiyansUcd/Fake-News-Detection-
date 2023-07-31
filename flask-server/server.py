@@ -5,12 +5,20 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import numpy as np
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from afinn import Afinn
+from pattern.en import sentiment as pattern_sentiment
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from textblob import TextBlob
+import torch
 from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
+from keras.layers import Input, Embedding, LSTM, Dense, concatenate, Bidirectional
+from sklearn.metrics import  f1_score, precision_score, accuracy_score, recall_score
 import requests
 from bs4 import BeautifulSoup
-import pickle
+from keras.models import Model
 from cleantext import clean
 
 def remove_comments(html_content):
@@ -73,6 +81,47 @@ def clean_text(text):
 
     return processed_text
 
+# Load emotion prediction model
+emotion_model_name = "j-hartmann/emotion-english-roberta-large"
+emotion_tokenizer = AutoTokenizer.from_pretrained(emotion_model_name)
+emotion_model = AutoModelForSequenceClassification.from_pretrained(emotion_model_name)
+
+# Create fake news detection model
+def create_fake_news_model():
+    max_len_text = 49
+    num_emotions = 7  # number of emotion features
+    num_scores = 4  #  number of sentiment score features
+    num_words = 169377
+      
+    embedding_dim = 100 
+
+    input_content = Input(shape=(max_len_text,), dtype='int32')
+    input_emotions = Input(shape=(num_emotions,), dtype='int32')
+    input_scores = Input(shape=(num_scores,), dtype='float32')
+
+    content_embedding = Embedding(input_dim=num_words, output_dim=embedding_dim, input_length=max_len_text)(input_content)
+    content_lstm = Bidirectional(LSTM(128))(content_embedding)
+
+    emotions_dense = Dense(64, activation='relu')(input_emotions)
+    scores_dense = Dense(64, activation='relu')(input_scores)
+
+    merged = concatenate([content_lstm, emotions_dense, scores_dense])
+    dense = Dense(64, activation='relu')(merged)
+    output = Dense(1, activation='sigmoid')(dense)
+
+    model = Model(inputs=[input_content, input_emotions, input_scores], outputs=output)
+    return model
+
+fake_news_model = create_fake_news_model()
+fake_news_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+fake_news_model.load_weights('fake_news_detection_LSTM.h5')
+
+max_len_text = 49
+tokenizer = Tokenizer()
+
+nltk.download('stopwords')
+nltk.download('punkt')
+stop_words = set(stopwords.words('english'))
 
 @app.route('/api/webscrap', methods=['POST'])
 def submit_URL():
@@ -111,22 +160,87 @@ def submit_data():
     data = request.json  
     modelParam = data.get('modelParam') 
 
-    model = Bidirectional_LSTM_model
-    max_seq_length = max_seq_length_model
-    if modelParam == "LSTM":
-        model = ensemble_model
-        max_seq_length = max_seq_length_lstm
-
     title = data.get('title')
     content = data.get('content')
 
-    preprocessed_content = clean_text(content)
-    tokenizer.fit_on_texts([preprocessed_content])
-    text_sequence = tokenizer.texts_to_sequences([preprocessed_content])
-    text_sequence = pad_sequences(text_sequence, maxlen=max_seq_length)
+    # Clean the content text
+    # content = clean_text(content)
+    preprocessed_content= content
+    # Sentiment Analysis
+    afinn = Afinn()
+    afinn_score = afinn.score(preprocessed_content)
+    pattern_score = pattern_sentiment(preprocessed_content)[0]
+    vader_analyzer = SentimentIntensityAnalyzer()
+    vader_score = vader_analyzer.polarity_scores(preprocessed_content)
+    vader_compound = vader_score['compound']
+    textblob_score = TextBlob(preprocessed_content).sentiment.polarity
 
-    prediction = model.predict(text_sequence)
-    is_fake = int(prediction[0][0] > 0.5)
+    # Tokenize the content text using the fake news detection model tokenizer
+    sequences = tokenizer.texts_to_sequences([content])
+    input_content = pad_sequences(sequences, maxlen=max_len_text)
+
+    # Use Hugging Face emotion model to predict emotions
+    emotion_inputs = emotion_tokenizer([content], padding=True, truncation=True, return_tensors="pt")
+    with torch.no_grad():
+        emotion_outputs = emotion_model(**emotion_inputs)
+    emotion_predictions = torch.softmax(emotion_outputs.logits, dim=1).squeeze().tolist()
+
+    emotions = {
+        'anger': emotion_predictions[0],
+        'disgust': emotion_predictions[1],
+        'fear': emotion_predictions[2],
+        'joy': emotion_predictions[3],
+        'neutral': emotion_predictions[4],
+        'sadness': emotion_predictions[5],
+        'surprise': emotion_predictions[6],
+    }
+
+    # Combine emotion predictions with other features
+    emotions_values = list(emotions.values())
+    emotion_features = [int(val > 0.5) for val in emotions_values]
+
+    # Prepare input data for fake news detection model
+    input_emotions = np.array(emotion_features).reshape(1, -1)
+    input_scores = np.array([afinn_score, pattern_score, vader_compound, textblob_score]).reshape(1, -1)
+
+    # input_features = np.concatenate((input_emotions, input_scores), axis=1)
+    # Perform prediction using the fake news detection model
+    threshold =0.7
+    prediction = fake_news_model.predict([input_content, input_emotions, input_scores])
+    is_fake = int(prediction[0][0] > threshold)
+    truthfulness_score = prediction[0][0]
+    tp = int(is_fake == 1)
+    fp = int(is_fake == 0)
+    tn = 0 if (fp == 1) else 1
+    fn = 0 if (tp == 1) else 1
+
+    # Avoid division by zero
+    if (tp + fp) != 0:
+        precision = tp / (tp + fp)
+    else:
+        precision = 0
+    if (tp + fn) != 0:
+        recall = tp / (tp + fn)
+    else:
+        recall = 0
+    accuracy = (tp + tn) / (tp + tn + fp + fn)
+
+    # Calculate F1-score
+    if (precision + recall) != 0:
+        f1 = 2 * (precision * recall) / (precision + recall)
+    else:
+        f1 = 0
+
+    num_pos = sum(score > 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
+    num_neg = sum(score < 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
+    num_neutral = 4 - num_pos - num_neg
+
+    if num_pos > num_neg and num_pos > num_neutral:
+        majority_voting = "Positive"
+    elif num_neg > num_pos and num_neg > num_neutral:
+        majority_voting = "Negative"
+    else:
+        majority_voting = "Neutral"
 
     # debug prints
     print("Title:", title)
@@ -134,14 +248,44 @@ def submit_data():
     print("Preprocessed Content:", preprocessed_content)
     print("Prediction:", prediction)
     print("Is Fake:", is_fake)
-    print("using ", model, "Model type")
+    # print("using ", model, "Model type")
+    print('tp', tp),
+    print('fp', fp),        
+    print('tn', tn),        
+    print('fn', fn),        
+    print("Prediction:", prediction)
+    print("Truthfulness Score:", truthfulness_score)
+    print("precision:", precision)
+    print("recall:", recall)
+    print("f1:", f1)
+    print("accuracy:", accuracy)
+
+    num_pos = sum(score > 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
+    num_neg = sum(score < 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
+    num_neutral = 4 - num_pos - num_neg
+
+    if num_pos > num_neg and num_pos > num_neutral:
+        majority_voting = "Positive"
+    elif num_neg > num_pos and num_neg > num_neutral:
+        majority_voting = "Negative"
+    else:
+        majority_voting = "Neutral"
 
     response = {
-        'message': 'Form data received :)',
         'title': title,
         'content': content,
         'is_fake': is_fake,
-        'sentiment_score': float(prediction[0][0])
+        'truthfulness_score': float(prediction[0][0]),
+        'emotions': emotions,
+        'afinn_score': afinn_score,
+        'pattern_score': pattern_score,
+        'vader_score': vader_compound,
+        'textblob_score': textblob_score,
+        'majority_voting': majority_voting,
+        'precision': precision,
+        'recall': recall,
+        'f1_score': f1,
+        'accuracy': accuracy,
     }
     return jsonify(response), 200
 
@@ -149,12 +293,12 @@ def submit_data():
 if __name__ == "__main__":
     # Load the saved model
     ensemble_model = load_model('model.h5')
-    Bidirectional_LSTM_model = load_model('Bi_dir_LSTM_model.h5')
+    Bidirectional_LSTM_model = load_model('model.h5')
     ensemble_model.summary()
     Bidirectional_LSTM_model.summary()
 
     tokenizer = Tokenizer()
-    max_seq_length_model = 100 
+    max_seq_length_model = 49 
     max_seq_length_lstm = 49
 
 

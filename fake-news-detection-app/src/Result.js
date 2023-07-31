@@ -78,22 +78,22 @@ export default function Result() {
 
 
     
-    const truthfulnessScore = data.truthfulness_score;
-    const truthfulnessScorePercentage = (truthfulnessScore * 100).toFixed(2);
-    let resultText;
-    const conditionMap = [
-  { range: [0, 0.25], text: 'This is mostly fake news' },
-  { range: [0.26, 0.50], text: 'This is partially fake news' },
-  { range: [0.51, 0.75], text: 'This is mostly authentic news' },
-  { range: [0.76, 1], text: 'This is authentic news' },
-];
+//     const truthfulnessScore = data.truthfulness_score;
+//     const truthfulnessScorePercentage = (truthfulnessScore * 100).toFixed(2);
+//     let resultText;
+//     const conditionMap = [
+//   { range: [0, 0.25], text: 'This is highly likely fake news' },
+//   { range: [0.26, 0.50], text: 'This is likely fake news' },
+//   { range: [0.51, 0.75], text: 'This is likely authentic news' },
+//   { range: [0.76, 1], text: 'This is very likely authentic news' },
+// ];
 
-   resultText = conditionMap
-    .reverse()
-    .find(({ range }) => {
-      const [min, max] = range;
-      return truthfulnessScore >= min && truthfulnessScore <= max;
-    })?.text || 'Error - Currently unable to judge the article\'s authenticity';
+//    resultText = conditionMap
+//     .reverse()
+//     .find(({ range }) => {
+//       const [min, max] = range;
+//       return truthfulnessScore >= min && truthfulnessScore <= max;
+//     })?.text || 'Error - Currently unable to judge the article\'s authenticity';
 
 if (!showComponent) {
   return null;
@@ -112,13 +112,13 @@ return (<>
             </div>
         </div>
         <div className='part1'>
-            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>{resultText}</h2>
-            <LineSpectrum value={truthfulnessScorePercentage} />
+            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>{"resultText"}</h2>
+            <LineSpectrum value={50} />
         </div>
         <div className='part2'>
-            <h2>{resultText}</h2>
-            {/* to edit radar chart inputs */}
-            {/* MAKE SURE TO SCALE VALUES */}
+            {/* <h2>{resultText}</h2> */}
+            {/* to edit radar chart inputs - ground truth  values unattainable right now so we are putting this on hold until then*/}
+            {/* <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} /> */}
             <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} />
             <Link to="/learn" className="learn-more-link">
                 <span role="img" aria-label="Learn More">&#9432;</span>

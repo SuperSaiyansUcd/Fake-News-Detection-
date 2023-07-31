@@ -33,21 +33,7 @@ export default function Learn() {
                     <br></br>
                     <li>An Ensemble("together") Model is a machine learning model that combines the predicitions of multiple models to achieve better performance </li>
                     <br></br>
-                    <li>Our
-                        <a href="https://en.wikipedia.org/wiki/Ensemble_learning"
-                            target="_blank" rel="noopener noreferrer">
-                            <u>Ensemble</u></a> Model combines
-                        <a href="https://www.ibm.com/topics/naive-bayes#:~:text=The%20Na%C3%AFve%20Bayes%20classifier%20is,a%20given%20class%20or%20category"
-                            target="_blank" rel="noopener noreferrer">
-                            <u>   Naive Bayes</u></a> and
-                        <a href="https://jmlr.csail.mit.edu/papers/volume7/crammer06a/crammer06a.pdf"
-                            target="_blank" rel="noopener noreferrer">
-                            <u> Passive Aggressive Classifier</u>
-                        </a> with an additional layer of a deep neural network.
-                        <br></br>
-                        For more on Neural Networks and Deep Learning, you can refer to
-                        <a href="https://news.mit.edu/2017/explained-neural-networks-deep-learning-0414"
-                            target="_blank" rel="noopener noreferrer"><u> this article</u></a>.</li>
+                    <li>Our Models work best on twitter tweets and are less reliable for other news sources. This is due to our training data sets</li>
 
                     <br></br><br></br>
                     <h4>Parameter Types</h4>

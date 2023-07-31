@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import re
 import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import numpy as np
@@ -15,41 +16,30 @@ from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.layers import Input, Embedding, LSTM, Dense, concatenate, Bidirectional
+# sklearn is deprecated - use pip3 install scikit-learn
 from sklearn.metrics import  f1_score, precision_score, accuracy_score, recall_score
 import requests
-from bs4 import BeautifulSoup
 from keras.models import Model
+from bs4 import BeautifulSoup, Comment
 from cleantext import clean
 
 def remove_comments(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
-    comments = soup.find_all(class_='comment')  # Replace 'class_' with the appropriate class or tag representing comments
+
+    # Remove comment tags
+    comments = soup.findAll(text=lambda text:isinstance(text, Comment))
     for comment in comments:
         comment.extract()
+
+    # Remove comment, comments, replies classes
+    for class_name in ['comment', 'comments', 'replies']:
+        elements = soup.find_all(class_=class_name)
+        for element in elements:
+            element.decompose()
+
     cleaned_text = soup.get_text(separator=' ')
 
-    cleaned_nocomments_body_text = clean(cleaned_text, 
-                    fix_unicode=True,               
-                    to_ascii=True,                  
-                    lower=True,                     
-                    no_line_breaks=True,            
-                    no_urls=True,                   
-                    no_emails=True,                 
-                    no_phone_numbers=True,          
-                    no_numbers=True,                
-                    no_digits=True,                 
-                    no_currency_symbols=True,       
-                    no_punct=True,                  
-                    replace_with_punct="",          
-                    replace_with_url="<URL>",
-                    replace_with_email="<EMAIL>",
-                    replace_with_phone_number="<PHONE>",
-                    replace_with_number="<NUMBER>",
-                    replace_with_digit="0",
-                    replace_with_currency_symbol="<CUR>",
-                    lang="en"                       
-                    )
-    return cleaned_nocomments_body_text
+    return cleaned_text
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -77,9 +67,7 @@ def clean_text(text):
 
     preprocessed_text = " ".join(tokens)
 
-    processed_text = remove_comments(preprocessed_text)
-
-    return processed_text
+    return preprocessed_text
 
 # Load emotion prediction model
 emotion_model_name = "j-hartmann/emotion-english-roberta-large"
@@ -140,19 +128,16 @@ def submit_URL():
             data['title'] = title
 
             # Scrape main text content
-            body_text = clean_text(soup.find('body').get_text())
+            body_text = remove_comments(soup.find('body').get_text())
             body_text = re.sub(r'\?.*$', '', body_text)
             main_text = body_text.strip() if body_text else "Text content not found"
             data['main_text'] = main_text
         else:
-            data['title'] = "URL empty"
-            data['main_text'] = ""
+            return jsonify({"error": "URL response status code was not 200"}), 500
     except requests.exceptions.RequestException as e:
-        print("Error fetching the URL:", e)
-        return jsonify({"error": "Failed to fetch the URL"}), 500
+        return jsonify({"error": str(e)}), 500
 
     return jsonify(data), 200
-
 
 
 @app.route('/api/submit', methods=['POST'])
@@ -164,7 +149,6 @@ def submit_data():
     content = data.get('content')
 
     # Clean the content text
-    # content = clean_text(content)
     preprocessed_content= content
     # Sentiment Analysis
     afinn = Afinn()

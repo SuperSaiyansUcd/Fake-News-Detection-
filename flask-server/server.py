@@ -25,13 +25,10 @@ from cleantext import clean
 
 def remove_comments(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
-
-    # Remove comment tags
-    comments = soup.findAll(text=lambda text:isinstance(text, Comment))
+    comments = soup.findAll(string=lambda string:isinstance(string, Comment))
     for comment in comments:
         comment.extract()
 
-    # Remove comment, comments, replies classes
     for class_name in ['comment', 'comments', 'replies']:
         elements = soup.find_all(class_=class_name)
         for element in elements:
@@ -143,12 +140,13 @@ def submit_URL():
 @app.route('/api/submit', methods=['POST'])
 def submit_data():
     data = request.json  
-    modelParam = data.get('modelParam') 
+    # modelParam = data.get('modelParam') 
 
     title = data.get('title')
     content = data.get('content')
 
     # Clean the content text
+    content =  clean_text(content)
     preprocessed_content= content
     # Sentiment Analysis
     afinn = Afinn()

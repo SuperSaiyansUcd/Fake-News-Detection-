@@ -57,6 +57,7 @@ export default function Result() {
         }
     };
 
+    // eslint-disable-next-line no-unused-vars
     const [data, setData] = useState({});
 
     useEffect(() => {

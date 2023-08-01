@@ -141,12 +141,14 @@ export default function Result() {
                     <LineSpectrum value={50} majorityVoting={majorityVoting} />
                 </div>
                 <div className='part2'>
-                    {/* to edit radar chart inputs - ground truth  values unattainable right now so we are putting this on hold until then*/}
-                    {/* <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} /> */}
-                    <RadarCharts data={emotionsArray} />
-                    {loading ? <div className="loading-spinner">Processing Model Data...</div> : null}
-                    <SimpleBarChart data={scoresData}/>
-    
+                    {!loading ? (
+                        <>
+                            <RadarCharts data={emotionsArray} />
+                            <SimpleBarChart data={scoresData} />
+                        </>
+                    ) : (
+                        <div className="loading-spinner">.......Loading Model Data.......</div>
+                    )}
                     <Link to="/learn" className="learn-more-link">
                         <span role="img" aria-label="Learn More">&#9432;</span>
                     </Link>

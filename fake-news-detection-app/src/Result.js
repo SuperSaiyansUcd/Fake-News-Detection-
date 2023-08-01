@@ -17,6 +17,7 @@ export default function Result() {
     const [vaderScore, setVaderScore] = useState(0); // -1 to 1
     const [textblobScore, setTextblobScore] = useState(0); // -1 to 1
     const [majorityVoting, setMajorityVoting] = useState(""); // positive, negative or neutral
+    const [loading, setLoading] = useState(false);
 
     // TO-DO    currently not in use - require ground truth scores 
         // const [precision, setPrecision] = useState(0);
@@ -59,6 +60,7 @@ export default function Result() {
     const [data, setData] = useState({});
 
     useEffect(() => {
+        setLoading(true);
         fetch("http://127.0.0.1:5000/api/submit", {
             method: 'POST',
             headers: {
@@ -82,10 +84,12 @@ export default function Result() {
                     // setF1Score(data.f1);
                 const modelPredictionLabel = data.is_fake === 0 ? 'Fake News' : 'Real News';
                 setModelPrediction(modelPredictionLabel);
+                setLoading(false);
                 // console.log(data);
             })
             .catch((error) => {
                 console.error('Error:', error);
+                setLoading(false);
             });
     }, [title, content]);
 
@@ -119,64 +123,64 @@ export default function Result() {
     //       return truthfulnessScore >= min && truthfulnessScore <= max;
     //     })?.text || 'Error - Currently unable to judge the article\'s authenticity';
 
-    if (!showComponent) {
-        return null;
-    }
-
-    return (<>
-        <div className='resultPage'>
-            <div className="dropdown">
-                <button>☰</button>
-                <div className="dropdown-content">
-                    <a href="/">Home</a>
-
-                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
-                    <a href="/learn">Learn More</a>
-                    <a href="/credits">Credits</a>
+        return (<>
+            <div className='resultPage'>
+                <div className="dropdown">
+                    <button>☰</button>
+                    <div className="dropdown-content">
+                        <a href="/">Home</a>
+    
+                        <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
+                        <a href="/learn">Learn More</a>
+                        <a href="/credits">Credits</a>
+                    </div>
                 </div>
+                <div className='part1'>
+                    <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>Model Prediction: {modelPrediction}</h2>
+                    <LineSpectrum value={50} majorityVoting={majorityVoting} />
+                </div>
+                <div className='part2'>
+                    {/* to edit radar chart inputs - ground truth  values unattainable right now so we are putting this on hold until then*/}
+                    {/* <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} /> */}
+                    <RadarCharts data={emotionsArray} />
+                    {loading ? <div className="loading-spinner">Processing Model Data...</div> : null}
+                    <SimpleBarChart data={scoresData}/>
+    
+                    <Link to="/learn" className="learn-more-link">
+                        <span role="img" aria-label="Learn More">&#9432;</span>
+                    </Link>
+                </div>
+                <div className='part3'>
+                    <p>- Title -</p>
+                    <p className='box1'>{title}</p>
+                    <p>- Content -</p>
+                    <p className='box2'>{content}</p>
+                    {/* <p>Model Prediction: {modelPrediction}</p> */}
+                    {/* Display emotions and sentiment scores */}
+                    {/* <p>Emotions:</p> */}
+                    {/* Display individual rows for each emotion */}
+                    {/* {Object.entries(emotions).map(([emotion, score]) => (
+                    <p key={emotion}>{emotion}: {score.toFixed(2)}</p>
+                    ))}
+    
+                    <p>Afinn Score: {afinnScore}</p>
+                    <p>Pattern Score: {patternScore}</p>
+                    <p>Vader Score: {vaderScore}</p>
+                    <p>TextBlob Score: {textblobScore}</p>
+                    <p>Majority Voting: {majorityVoting}</p> */}
+                </div>
+                <div className='part3'>
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <button className='button'>Give Feedback</button></a>
+                    <button className='button' onClick={toHome}>Return Home</button>
+                </div>
+    
             </div>
-            <div className='part1'>
-                <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>Model Prediction: {modelPrediction}</h2>
-                <LineSpectrum value={50} majorityVoting={majorityVoting} />
-            </div>
-            <div className='part2'>
-                {/* to edit radar chart inputs - ground truth  values unattainable right now so we are putting this on hold until then*/}
-                {/* <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} /> */}
-                <RadarCharts data={emotionsArray} />
-                <SimpleBarChart data={scoresData}/>
+        </>
+        );
 
-                <Link to="/learn" className="learn-more-link">
-                    <span role="img" aria-label="Learn More">&#9432;</span>
-                </Link>
-            </div>
-            <div className='part3'>
-                <p>- Title -</p>
-                <p className='box1'>{title}</p>
-                <p>- Content -</p>
-                <p className='box2'>{content}</p>
-                {/* <p>Model Prediction: {modelPrediction}</p> */}
-                {/* Display emotions and sentiment scores */}
-                {/* <p>Emotions:</p> */}
-                {/* Display individual rows for each emotion */}
-                {/* {Object.entries(emotions).map(([emotion, score]) => (
-                <p key={emotion}>{emotion}: {score.toFixed(2)}</p>
-                ))}
 
-                <p>Afinn Score: {afinnScore}</p>
-                <p>Pattern Score: {patternScore}</p>
-                <p>Vader Score: {vaderScore}</p>
-                <p>TextBlob Score: {textblobScore}</p>
-                <p>Majority Voting: {majorityVoting}</p> */}
-            </div>
-            <div className='part3'>
-                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <button className='button'>Give Feedback</button></a>
-                <button className='button' onClick={toHome}>Return Home</button>
-            </div>
 
-        </div>
-    </>
-    );
 }

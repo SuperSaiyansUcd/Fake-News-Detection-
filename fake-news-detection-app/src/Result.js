@@ -21,7 +21,6 @@ export default function Result() {
     const [f1_score, setF1Score] = useState(0);
     const [modelPrediction, setModelPrediction] = useState('');
 
-
     const navigate = useNavigate();
     const toHome = (e) => {
         e.preventDefault();
@@ -112,7 +111,7 @@ return (<>
             </div>
         </div>
         <div className='part1'>
-            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>{"resultText"}</h2>
+            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>Model Prediction: {modelPrediction}</h2>
             <LineSpectrum value={50} />
         </div>
         <div className='part2'>
@@ -129,9 +128,9 @@ return (<>
                 <p className='box1'>{title}</p>
                 <p>- Content -</p>
                 <p className='box2'>{content}</p>
-                <p>Model Prediction: {modelPrediction}</p>
+                {/* <p>Model Prediction: {modelPrediction}</p> */}
                 {/* Display emotions and sentiment scores */}
-                <p>Emotions:</p>
+                {/* <p>Emotions:</p> */}
                 {/* Display individual rows for each emotion */}
                 {Object.entries(emotions).map(([emotion, score]) => (
                 <p key={emotion}>{emotion}: {score.toFixed(2)}</p>

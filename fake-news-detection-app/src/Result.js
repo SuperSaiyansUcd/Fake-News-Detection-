@@ -20,6 +20,16 @@ export default function Result() {
     const [accuracy, setAccuracy] = useState(0);
     const [f1_score, setF1Score] = useState(0);
     const [modelPrediction, setModelPrediction] = useState('');
+    let emotionsArray = [];
+
+    Object.entries(emotions).forEach(([emotion, score]) => {
+        if (score < 0.1) {
+            score = 0.1;
+        }
+        emotionsArray.push({name: emotion, value: score.toFixed(2)});
+    });    
+
+    console.log(emotionsArray);
 
     const navigate = useNavigate();
     const toHome = (e) => {
@@ -57,7 +67,7 @@ export default function Result() {
                 setF1Score(data.f1);
                 const modelPredictionLabel = data.is_fake === 0 ? 'Fake News' : 'Real News';
                 setModelPrediction(modelPredictionLabel);
-                console.log(data);
+                // console.log(data);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -115,10 +125,18 @@ return (<>
             <LineSpectrum value={50} />
         </div>
         <div className='part2'>
-            {/* <h2>{resultText}</h2> */}
             {/* to edit radar chart inputs - ground truth  values unattainable right now so we are putting this on hold until then*/}
             {/* <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} /> */}
-            <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} />
+            <RadarCharts data={emotionsArray} />
+            {/* <RadarCharts
+                data={[
+                    { name: 'Precision', value: 0.11 },
+                    { name: 'Recall', value: 0.11 },
+                    { name: 'F1Score', value: 0.11 },
+                    { name: 'Accuracy', value: 0.11 },
+                    { name: 'Specificity', value: 0.9 },
+                ]}
+            /> */}
             <Link to="/learn" className="learn-more-link">
                 <span role="img" aria-label="Learn More">&#9432;</span>
             </Link>

@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 
 const SimpleBarChart = ({data}) => (
     <BarChart
-        width={500}
+        width={600}
         height={300}
         data={data}
         margin={{
@@ -18,7 +18,7 @@ const SimpleBarChart = ({data}) => (
         <YAxis domain={[-1, 1]} stroke="black" />
         <Tooltip />
         <Legend wrapperStyle={{ color: 'black' }} />
-        <Bar dataKey="score" fill="#1946bf" />
+        <Bar dataKey="Sentiment_Score" fill="#1946bf" />
     </BarChart>
 );
 

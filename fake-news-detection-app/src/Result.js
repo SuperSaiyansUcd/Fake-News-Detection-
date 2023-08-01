@@ -23,13 +23,19 @@ export default function Result() {
         // const [recall, setRecall] = useState(0);
         // const [accuracy, setAccuracy] = useState(0);
         // const [f1_score, setF1Score] = useState(0);
+    let processedAfinnScore = afinnScore
+    if(processedAfinnScore > 1){
+        processedAfinnScore = 1
+    }else if(processedAfinnScore < -1){
+        processedAfinnScore = -1
+    }
     const [modelPrediction, setModelPrediction] = useState('');
     let emotionsArray = [];
     const scoresData = [
-        { name: 'Afinn Score', score: vaderScore },
-        { name: 'Pattern Score', score: patternScore },
-        { name: 'Vader Score', score: vaderScore },
-        { name: 'TextBlob Score', score: textblobScore },
+        { name: 'Afinn Score', Sentiment_Score: processedAfinnScore },
+        { name: 'Pattern Score', Sentiment_Score: patternScore },
+        { name: 'Vader Score', Sentiment_Score: vaderScore },
+        { name: 'TextBlob Score', Sentiment_Score: textblobScore },
     ];
     Object.entries(emotions).forEach(([emotion, score]) => {
         if (score < 0.1) {
@@ -131,7 +137,7 @@ export default function Result() {
             </div>
             <div className='part1'>
                 <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>Model Prediction: {modelPrediction}</h2>
-                <LineSpectrum value={50} />
+                <LineSpectrum value={50} majorityVoting={majorityVoting} />
             </div>
             <div className='part2'>
                 {/* to edit radar chart inputs - ground truth  values unattainable right now so we are putting this on hold until then*/}

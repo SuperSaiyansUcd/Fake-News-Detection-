@@ -169,7 +169,7 @@ def submit_data():
 
     # input_features = np.concatenate((input_emotions, input_scores), axis=1)
     # Perform prediction using the fake news detection model
-    threshold =0.7
+    threshold =0.65
     prediction = fake_news_model.predict([input_content, input_emotions, input_scores])
     is_fake = int(prediction[0][0] > threshold)
     truthfulness_score = prediction[0][0]

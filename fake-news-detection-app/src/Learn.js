@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import './Learn.css';
-import matrixImage from './Images/matrix.png';
 
 export default function Learn() {
     const navigate = useNavigate();

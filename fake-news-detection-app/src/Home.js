@@ -95,6 +95,10 @@ const Home = () => {
         }
         if(queryContent !== null) {
             setContent(queryContent);
+            window.scrollTo({
+                top: 1500,
+                behavior: 'smooth',
+            });
         }
         else if (storedContent !== null) {
             setContent(storedContent);

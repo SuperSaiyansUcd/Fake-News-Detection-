@@ -19,10 +19,10 @@ export default function Result() {
     const [majorityVoting, setMajorityVoting] = useState(""); // positive, negative or neutral
 
     // TO-DO    currently not in use - require ground truth scores 
-        // const [precision, setPrecision] = useState(0);
-        // const [recall, setRecall] = useState(0);
-        // const [accuracy, setAccuracy] = useState(0);
-        // const [f1_score, setF1Score] = useState(0);
+        const [precision, setPrecision] = useState(0);
+        const [recall, setRecall] = useState(0);
+        const [accuracy, setAccuracy] = useState(0);
+        const [f1_score, setF1Score] = useState(0);
     let processedAfinnScore = afinnScore
     if(processedAfinnScore > 1){
         processedAfinnScore = 1
@@ -77,9 +77,9 @@ export default function Result() {
                 setMajorityVoting(data.majority_voting);
                 // TO-DO    currently not in use - require ground truth scores 
                     setPrecision(data.precision);
-                    // setRecall(data.recall);
-                    // setAccuracy(data.accuracy);
-                    // setF1Score(data.f1);
+                    setRecall(data.recall);
+                    setAccuracy(data.accuracy);
+                    setF1Score(data.f1);
                 const modelPredictionLabel = data.is_fake === 0 ? 'Fake News' : 'Real News';
                 setModelPrediction(modelPredictionLabel);
                 // console.log(data);

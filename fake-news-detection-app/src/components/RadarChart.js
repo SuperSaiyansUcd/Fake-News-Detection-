@@ -3,7 +3,7 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'r
 
 const RadarCharts = ({ data }) => {
     return (
-        <RadarChart height={300} width={400} outerRadius="80%" data={data}>
+        <RadarChart height={300} width={450} outerRadius="80%" data={data}>
             <PolarGrid />
             <PolarAngleAxis dataKey="name" tick={{ fill: 'Black', fontWeight: 'bold' }} />
             <PolarRadiusAxis />

@@ -76,7 +76,7 @@ export default function Result() {
                 setTextblobScore(data.textblob_score);
                 setMajorityVoting(data.majority_voting);
                 // TO-DO    currently not in use - require ground truth scores 
-                    // setPrecision(data.precision);
+                    setPrecision(data.precision);
                     // setRecall(data.recall);
                     // setAccuracy(data.accuracy);
                     // setF1Score(data.f1);

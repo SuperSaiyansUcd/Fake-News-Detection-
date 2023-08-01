@@ -1,6 +1,17 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
+const CustomBar = (props) => {
+    const { fill, x, y, width, value } = props;
+
+    const minHeight = 10;
+
+    const height = value === 0 ? minHeight : Math.abs(y);
+
+    return <rect x={x} y={y} width={width} height={height} fill={fill} />;
+};
+
+
 const SimpleBarChart = ({data}) => (
     <BarChart
         width={600}
@@ -18,8 +29,13 @@ const SimpleBarChart = ({data}) => (
         <YAxis domain={[-1, 1]} stroke="black" />
         <Tooltip />
         <Legend wrapperStyle={{ color: 'black' }} />
-        <Bar dataKey="Sentiment_Score" fill="#1946bf" />
+        <Bar dataKey="Sentiment_Score" fill="#1946bf" minPointSize={10}>
+          {
+            data.map((entry, index) => <CustomBar key={`bar-${index}`} />)
+          }
+        </Bar>
     </BarChart>
 );
+
 
 export default SimpleBarChart;

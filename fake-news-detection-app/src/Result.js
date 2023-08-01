@@ -95,14 +95,14 @@ export default function Result() {
     }, [title, content]);
 
 
-    const [showComponent, setShowComponent] = useState(false);
-    useEffect(() => {
-        const delay = 65;
-        const timer = setTimeout(() => {
-            setShowComponent(true);
-        }, delay);
-        return () => clearTimeout(timer);
-    }, []);
+    // const [showComponent, setShowComponent] = useState(false);
+    // useEffect(() => {
+    //     const delay = 65;
+    //     const timer = setTimeout(() => {
+    //         setShowComponent(true);
+    //     }, delay);
+    //     return () => clearTimeout(timer);
+    // }, []);
 
 
 

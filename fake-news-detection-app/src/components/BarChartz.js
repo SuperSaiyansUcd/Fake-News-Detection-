@@ -1,15 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const data = [
-    { name: 'Afinn', score: 0.2 },
-    { name: 'Pattern', score: -0.1 },
-    { name: 'Vader', score: 0.5 },
-    { name: 'TextBlob', score: -0.7 },
-    { name: 'Majority Voting', score: 0.3 },
-];
-
-const SimpleBarChart = ({ data }) => (
+const SimpleBarChart = ({data}) => (
     <BarChart
         width={500}
         height={300}
@@ -22,11 +14,11 @@ const SimpleBarChart = ({ data }) => (
         }}
     >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis domain={[-1, 1]} />
+        <XAxis dataKey="name" stroke="black" />
+        <YAxis domain={[-1, 1]} stroke="black" />
         <Tooltip />
-        <Legend />
-        <Bar dataKey="score" fill="#8884d8" />
+        <Legend wrapperStyle={{ color: 'black' }} />
+        <Bar dataKey="score" fill="#1946bf" />
     </BarChart>
 );
 

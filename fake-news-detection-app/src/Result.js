@@ -25,22 +25,11 @@ export default function Result() {
         // const [f1_score, setF1Score] = useState(0);
     const [modelPrediction, setModelPrediction] = useState('');
     let emotionsArray = [];
-
-
-    const patternFormattedAfinnScore = (patternScore + 2) * 3; // make positive int between(1-9)
-    const vaderFormattedAfinnScore = (vaderScore + 2) * 3; // make positive int between(1-9)
-    const textblobFormattedAfinnScore = (textblobScore + 2) * 3; // make positive int between(1-9)
-    let radarFormattedAfinnScore = 1; 
-    if(afinnScore && afinnScore > 9){
-        radarFormattedAfinnScore = 9;
-    }else if(afinnScore < 9 && afinnScore > 1){
-        radarFormattedAfinnScore = afinnScore;
-    }
     const scoresData = [
-        { name: 'Afinn Score', value: radarFormattedAfinnScore },
-        { name: 'Pattern Score', value: patternFormattedAfinnScore },
-        { name: 'Vader Score', value: vaderFormattedAfinnScore },
-        { name: 'TextBlob Score', value: textblobFormattedAfinnScore },
+        { name: 'Afinn Score', score: vaderScore },
+        { name: 'Pattern Score', score: patternScore },
+        { name: 'Vader Score', score: vaderScore },
+        { name: 'TextBlob Score', score: textblobScore },
     ];
     Object.entries(emotions).forEach(([emotion, score]) => {
         if (score < 0.1) {
@@ -148,7 +137,7 @@ export default function Result() {
                 {/* to edit radar chart inputs - ground truth  values unattainable right now so we are putting this on hold until then*/}
                 {/* <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} /> */}
                 <RadarCharts data={emotionsArray} />
-                <SimpleBarChart />
+                <SimpleBarChart data={scoresData}/>
 
                 <Link to="/learn" className="learn-more-link">
                     <span role="img" aria-label="Learn More">&#9432;</span>
@@ -161,9 +150,9 @@ export default function Result() {
                 <p className='box2'>{content}</p>
                 {/* <p>Model Prediction: {modelPrediction}</p> */}
                 {/* Display emotions and sentiment scores */}
-                <p>Emotions:</p>
+                {/* <p>Emotions:</p> */}
                 {/* Display individual rows for each emotion */}
-                {Object.entries(emotions).map(([emotion, score]) => (
+                {/* {Object.entries(emotions).map(([emotion, score]) => (
                 <p key={emotion}>{emotion}: {score.toFixed(2)}</p>
                 ))}
 
@@ -171,7 +160,7 @@ export default function Result() {
                 <p>Pattern Score: {patternScore}</p>
                 <p>Vader Score: {vaderScore}</p>
                 <p>TextBlob Score: {textblobScore}</p>
-                <p>Majority Voting: {majorityVoting}</p>
+                <p>Majority Voting: {majorityVoting}</p> */}
             </div>
             <div className='part3'>
                 <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"

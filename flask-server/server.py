@@ -49,23 +49,6 @@ def home():
 def favicon():
     return ''
 
-
-def clean_text(text):
-    text = text.lower()
-
-    text = re.sub(r"http\S+|www\S+|https\S+", "", text, flags=re.MULTILINE)
-
-    text = re.sub(r"[^\w\s]", "", text)
-    text = re.sub(r"\d+", "", text)
-
-    tokens = word_tokenize(text)
-
-    tokens = [token for token in tokens if token not in stop_words]
-
-    preprocessed_text = " ".join(tokens)
-
-    return preprocessed_text
-
 # Load emotion prediction model
 emotion_model_name = "j-hartmann/emotion-english-roberta-large"
 emotion_tokenizer = AutoTokenizer.from_pretrained(emotion_model_name)
@@ -146,7 +129,6 @@ def submit_data():
     content = data.get('content')
 
     # Clean the content text
-    content =  clean_text(content)
     preprocessed_content= content
     # Sentiment Analysis
     afinn = Afinn()

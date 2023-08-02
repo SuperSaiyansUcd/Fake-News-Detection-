@@ -95,6 +95,10 @@ const Home = () => {
         }
         if(queryContent !== null) {
             setContent(queryContent);
+            window.scrollTo({
+                top: 1500,
+                behavior: 'smooth',
+            });
         }
         else if (storedContent !== null) {
             setContent(storedContent);
@@ -179,13 +183,13 @@ const Home = () => {
                             value="Use LSTM Model"
                             title="Long short-term memory Machine Learning Model"
                         />
-                        <input
+                        {/* <input
                             className="button"
                             type="submit"
                             id="button2"
                             value="Use Ensemble Model"
                             title="Ensemble Machine Learning Model"
-                        />
+                        /> */}
                         <Link to="/learn" className="learn-more-link">
                             <span role="img" aria-label="Learn More">&#9432;</span>
                         </Link>

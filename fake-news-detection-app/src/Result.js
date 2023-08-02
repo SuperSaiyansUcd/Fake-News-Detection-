@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import LineSpectrum from './components/LineSpectrum';
 import { useState, useEffect } from "react";
 import RadarCharts from './components/RadarChart';
+import SimpleBarChart from './components/BarChartz';
 import './Results.css';
 import { Link } from 'react-router-dom';
 
@@ -9,18 +10,42 @@ export default function Result() {
     const location = useLocation();
     const title = location.state.title;
     const content = location.state.content;
+    // sentiment types = [anger, disgust, fear, joy, neutral, sadness, -surprise]
     const [emotions, setEmotions] = useState({});
-    const [afinnScore, setAfinnScore] = useState(0);
-    const [patternScore, setPatternScore] = useState(0);
-    const [vaderScore, setVaderScore] = useState(0);
-    const [textblobScore, setTextblobScore] = useState(0);
-    const [majorityVoting, setMajorityVoting] = useState("");
-    const [precision, setPrecision] = useState(0);
-    const [recall, setRecall] = useState(0);
-    const [accuracy, setAccuracy] = useState(0);
-    const [f1_score, setF1Score] = useState(0);
-    const [modelPrediction, setModelPrediction] = useState('');
+    const [afinnScore, setAfinnScore] = useState(0); // -infinity to +infinity
+    const [patternScore, setPatternScore] = useState(0); // -1 to 1
+    const [vaderScore, setVaderScore] = useState(0); // -1 to 1
+    const [textblobScore, setTextblobScore] = useState(0); // -1 to 1
+    const [majorityVoting, setMajorityVoting] = useState(""); // positive, negative or neutral
+    const [loading, setLoading] = useState(false);
 
+    // TO-DO    currently not in use - require ground truth scores 
+        // const [precision, setPrecision] = useState(0);
+        // const [recall, setRecall] = useState(0);
+        // const [accuracy, setAccuracy] = useState(0);
+        // const [f1_score, setF1Score] = useState(0);
+    let processedAfinnScore = afinnScore
+    if(processedAfinnScore > 1){
+        processedAfinnScore = 1
+    }else if(processedAfinnScore < -1){
+        processedAfinnScore = -1
+    }
+    const [modelPrediction, setModelPrediction] = useState('');
+    let emotionsArray = [];
+    const scoresData = [
+        { name: 'Afinn Score', Sentiment_Score: processedAfinnScore },
+        { name: 'Pattern Score', Sentiment_Score: patternScore },
+        { name: 'Vader Score', Sentiment_Score: vaderScore },
+        { name: 'TextBlob Score', Sentiment_Score: textblobScore },
+    ];
+    Object.entries(emotions).forEach(([emotion, score]) => {
+        if (score < 0.1) {
+            score = 0.1;
+        }
+        emotionsArray.push({ name: '-' + emotion, value: score.toFixed(2) });
+    });
+
+    console.log(emotionsArray);
 
     const navigate = useNavigate();
     const toHome = (e) => {
@@ -32,9 +57,11 @@ export default function Result() {
         }
     };
 
+    // eslint-disable-next-line no-unused-vars
     const [data, setData] = useState({});
 
     useEffect(() => {
+        setLoading(true);
         fetch("http://127.0.0.1:5000/api/submit", {
             method: 'POST',
             headers: {
@@ -51,107 +78,112 @@ export default function Result() {
                 setVaderScore(data.vader_score);
                 setTextblobScore(data.textblob_score);
                 setMajorityVoting(data.majority_voting);
-                
-                setPrecision(data.precision);
-                setRecall(data.recall);
-                setAccuracy(data.accuracy);
-                setF1Score(data.f1);
+                // TO-DO    currently not in use - require ground truth scores 
+                    // setPrecision(data.precision);
+                    // setRecall(data.recall);
+                    // setAccuracy(data.accuracy);
+                    // setF1Score(data.f1);
                 const modelPredictionLabel = data.is_fake === 0 ? 'Fake News' : 'Real News';
                 setModelPrediction(modelPredictionLabel);
-                console.log(data);
+                setLoading(false);
+                // console.log(data);
             })
             .catch((error) => {
                 console.error('Error:', error);
+                setLoading(false);
             });
     }, [title, content]);
 
 
-    const [showComponent, setShowComponent] = useState(false);
-    useEffect(() => {
-        const delay = 65;
-        const timer = setTimeout(() => {
-            setShowComponent(true);
-        }, delay);
-        return () => clearTimeout(timer);
-    }, []);
+    // const [showComponent, setShowComponent] = useState(false);
+    // useEffect(() => {
+    //     const delay = 65;
+    //     const timer = setTimeout(() => {
+    //         setShowComponent(true);
+    //     }, delay);
+    //     return () => clearTimeout(timer);
+    // }, []);
 
 
 
+
+    //     const truthfulnessScore = data.truthfulness_score;
+    //     const truthfulnessScorePercentage = (truthfulnessScore * 100).toFixed(2);
+    //     let resultText;
+    //     const conditionMap = [
+    //   { range: [0, 0.25], text: 'This is highly likely fake news' },
+    //   { range: [0.26, 0.50], text: 'This is likely fake news' },
+    //   { range: [0.51, 0.75], text: 'This is likely authentic news' },
+    //   { range: [0.76, 1], text: 'This is very likely authentic news' },
+    // ];
+
+    //    resultText = conditionMap
+    //     .reverse()
+    //     .find(({ range }) => {
+    //       const [min, max] = range;
+    //       return truthfulnessScore >= min && truthfulnessScore <= max;
+    //     })?.text || 'Error - Currently unable to judge the article\'s authenticity';
+
+        return (<>
+            <div className='resultPage'>
+                <div className="dropdown">
+                    <button>☰</button>
+                    <div className="dropdown-content">
+                        <a href="/">Home</a>
     
-    const truthfulnessScore = data.truthfulness_score;
-    const truthfulnessScorePercentage = (truthfulnessScore * 100).toFixed(2);
-    let resultText;
-    const conditionMap = [
-  { range: [0, 0.25], text: 'This is mostly fake news' },
-  { range: [0.26, 0.50], text: 'This is partially fake news' },
-  { range: [0.51, 0.75], text: 'This is mostly authentic news' },
-  { range: [0.76, 1], text: 'This is authentic news' },
-];
-
-   resultText = conditionMap
-    .reverse()
-    .find(({ range }) => {
-      const [min, max] = range;
-      return truthfulnessScore >= min && truthfulnessScore <= max;
-    })?.text || 'Error - Currently unable to judge the article\'s authenticity';
-
-if (!showComponent) {
-  return null;
-}
-
-return (<>
-    <div className='resultPage'>
-        <div className="dropdown">
-            <button>☰</button>
-            <div className="dropdown-content">
-                <a href="/">Home</a>
-
-                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
-                <a href="/learn">Learn More</a>
-                <a href="/credits">Credits</a>
+                        <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK" target="_blank" rel="noopener noreferrer">Feedback</a>
+                        <a href="/learn">Learn More</a>
+                        <a href="/credits">Credits</a>
+                    </div>
+                </div>
+                <div className='part1'>
+                    <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>Model Prediction: {modelPrediction}</h2>
+                    <LineSpectrum value={50} majorityVoting={majorityVoting} />
+                </div>
+                <div className='part2'>
+                    {!loading ? (
+                        <>
+                            <RadarCharts data={emotionsArray} />
+                            <SimpleBarChart data={scoresData} />
+                        </>
+                    ) : (
+                        <div className="loading-spinner">.......Loading Model Data.......</div>
+                    )}
+                    <Link to="/learn" className="learn-more-link">
+                        <span role="img" aria-label="Learn More">&#9432;</span>
+                    </Link>
+                </div>
+                <div className='part3'>
+                    <p>- Title -</p>
+                    <p className='box1'>{title}</p>
+                    <p>- Content -</p>
+                    <p className='box2'>{content}</p>
+                    {/* <p>Model Prediction: {modelPrediction}</p> */}
+                    {/* Display emotions and sentiment scores */}
+                    {/* <p>Emotions:</p> */}
+                    {/* Display individual rows for each emotion */}
+                    {/* {Object.entries(emotions).map(([emotion, score]) => (
+                    <p key={emotion}>{emotion}: {score.toFixed(2)}</p>
+                    ))}
+    
+                    <p>Afinn Score: {afinnScore}</p>
+                    <p>Pattern Score: {patternScore}</p>
+                    <p>Vader Score: {vaderScore}</p>
+                    <p>TextBlob Score: {textblobScore}</p>
+                    <p>Majority Voting: {majorityVoting}</p> */}
+                </div>
+                <div className='part3'>
+                    <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <button className='button'>Give Feedback</button></a>
+                    <button className='button' onClick={toHome}>Return Home</button>
+                </div>
+    
             </div>
-        </div>
-        <div className='part1'>
-            <h2 style={{ fontSize: '34px', color: '#FFFFFF', fontWeight: 'bold' }}>{resultText}</h2>
-            <LineSpectrum value={truthfulnessScorePercentage} />
-        </div>
-        <div className='part2'>
-            <h2>{resultText}</h2>
-            {/* to edit radar chart inputs */}
-            {/* MAKE SURE TO SCALE VALUES */}
-            <RadarCharts Precision={precision} Score={f1_score} Recall={recall} Accuracy={accuracy} />
-            <Link to="/learn" className="learn-more-link">
-                <span role="img" aria-label="Learn More">&#9432;</span>
-            </Link>
-        </div>
-        <div className='part3'>
-                <p>- Title -</p>
-                <p className='box1'>{title}</p>
-                <p>- Content -</p>
-                <p className='box2'>{content}</p>
-                <p>Model Prediction: {modelPrediction}</p>
-                {/* Display emotions and sentiment scores */}
-                <p>Emotions:</p>
-                {/* Display individual rows for each emotion */}
-                {Object.entries(emotions).map(([emotion, score]) => (
-                <p key={emotion}>{emotion}: {score.toFixed(2)}</p>
-                ))}
+        </>
+        );
 
-                <p>Afinn Score: {afinnScore}</p>
-                <p>Pattern Score: {patternScore}</p>
-                <p>Vader Score: {vaderScore}</p>
-                <p>TextBlob Score: {textblobScore}</p>
-                <p>Majority Voting: {majorityVoting}</p>
-            </div>
-            <div className='part3'>
-                <a href="https://qfreeaccountssjc1.az1.qualtrics.com/jfe/form/SV_1ZKfSS8zuQDJtOK"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <button className='button'>Give Feedback</button></a>
-                <button className='button' onClick={toHome}>Return Home</button>
-            </div>
 
-        </div>
-    </>
-    );
+
 }

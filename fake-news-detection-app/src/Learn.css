@@ -5,12 +5,14 @@
     align-items: center;
     background-image: linear-gradient(to top left, #9f9f9f, #100c0c);
     background-size: cover;
-    overflow-y: auto; /* Enable scrolling when content exceeds viewport */
+    overflow-y: auto;
     height: 100vh;
     width: 100vw;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     position: relative;
     z-index: 0;
+    font-size: 1.2em; 
+    text-align: center; 
   }
   
   .learnsPage::before {
@@ -25,3 +27,9 @@
     margin-bottom: 100px;
   }
   
+  .red-colon li::before {
+    content: "-";
+    color: red;
+    font-size: 1.5em; 
+    font-weight: bold;
+}

@@ -253,7 +253,7 @@ def submit_data():
 if __name__ == "__main__":
     fake_news_model = create_fake_news_model()
     fake_news_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    fake_news_model.load_weights('fake_news_detection_LSTM.h5')
+    fake_news_model.load_weights('fake_news_detection_lstm.h5')
 
     nltk.download('stopwords')
     nltk.download('punkt')

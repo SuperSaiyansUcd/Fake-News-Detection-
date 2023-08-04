@@ -80,10 +80,6 @@ def create_fake_news_model():
     model = Model(inputs=[input_content, input_emotions, input_scores], outputs=output)
     return model
 
-fake_news_model = create_fake_news_model()
-fake_news_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-fake_news_model.load_weights('fake_news_detection_LSTM.h5')
-
 max_len_text = 49
 tokenizer = Tokenizer()
 
@@ -255,16 +251,9 @@ def submit_data():
 
 
 if __name__ == "__main__":
-    # Load the saved model
-    ensemble_model = load_model('model.h5')
-    Bidirectional_LSTM_model = load_model('model.h5')
-    ensemble_model.summary()
-    Bidirectional_LSTM_model.summary()
-
-    tokenizer = Tokenizer()
-    max_seq_length_model = 49 
-    max_seq_length_lstm = 49
-
+    fake_news_model = create_fake_news_model()
+    fake_news_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    fake_news_model.load_weights('fake_news_detection_LSTM.h5')
 
     nltk.download('stopwords')
     nltk.download('punkt')

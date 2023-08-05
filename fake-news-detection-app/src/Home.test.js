@@ -25,15 +25,10 @@ test('loads and displays', async () => {
 
   // get
   const lstmButton = screen.getByRole('button', {
-    name: 'Use LSTM Model',
+    name: 'Submit',
     title: 'Long short-term memory Machine Learning Model',
-  });
-  const ensembleButton = screen.getByRole('button', {
-    name : 'Use Ensemble Model',
-    title: 'Ensemble Machine Learning Model'
   });
 
   // assert
   expect(lstmButton).toBeInTheDocument();
-  expect(ensembleButton).toBeInTheDocument();
 })

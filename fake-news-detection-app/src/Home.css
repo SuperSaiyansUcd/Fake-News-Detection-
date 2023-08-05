@@ -1,130 +1,141 @@
 .container {
-    position: relative;
-  }
-  
-  .animated-heading {
-    cursor: pointer;
-    position: relative;
-    animation: moveLeftRight 2s infinite;
-    /* Add a higher z-index for the animated heading to make sure it's above the pseudo-element */
-    z-index: 1;
-  }
-  
-  @keyframes moveLeftRight {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(10px);
-    }
-  }
-  
+  position: relative;
+}
+
+/* .animated-heading {
+cursor: pointer;
+position: relative;
+animation: moveLeftRight 2s infinite;
+/* Add a higher z-index for the animated heading to make sure it's above the pseudo-element */
+/* z-index: 1;
+} */
+
+/* @keyframes moveLeftRight {
+0%, 100% {
+  transform: translateX(0);
+}
+50% {
+  transform: translateX(10px);
+}
+} */ 
+
 
 .section {
-    height: 100vh;
-    width: 100vi;
-  }
-  
+  height: 100vh;
+  width: 100vi;
+}
 
-  
-  #section1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url(../public/home1.jpg);
-    background-size: cover;
-    height: 100vh;
-    margin: 0;
-    position: relative;
-    z-index: 0;
-  }
-  
-  #section1::before {
-    content: '';
-    background-image: url(../public/home1.jpg);
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    filter: blur(3px);
-    z-index: -1;
-  }
-  
-  textarea {
-    min-height: 190px;
-    max-height: 291px;
-    resize: vertical;
-    font-size: 1em;
-  }
-  
-  input, textarea {
-    background-color: rgb(255, 255, 255);
-    opacity: 0.98; 
-    border: 1.5px solid black;
-    border-radius: 1.5px;
-    color: #010000;
-  }
 
-  #section1:has(h1:hover) {
-    animation: moveIt 10s linear infinite;
-  }
-  
-  #section2 {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url(../public/home2.jpg);
-    background-size: cover;
-    height: 100vh; 
-    margin: 0;
-    min-height: 600px;
-    overflow: hidden;
-    position: relative;
-    z-index: 0;
-  }
-  
-  #section2::before {
-    content: '';
-    background-image: url(../public/home2.jpg);
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    filter: blur(5px);
-    z-index: -1;
-  }
 
-  #section2 form {
-    justify-self: flex-start;
-  }
+#section1 {
+display: flex;
+flex-direction: column;
+align-items: center;
+background-image: url(../public/home1.jpg);
+background-size: cover;
+height: 100vh;
+margin: 0;
+position: relative;
+z-index: 0;
+}
 
-  .error {
-    width: 75vw;
-    border: 2px solid red;
-  }
-  
-  .errorUrl {
-    width: 75vw;
-    border: 2px solid red;
-    position: relative;
-  }
-  
-  .errorUrl::before {
-    content: "Invalid URL";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: red;
-    color: white;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 14px;
-    white-space: nowrap;
-  }
-  
+#section1::before {
+content: '';
+background-image: url(../public/home1.jpg);
+background-size: cover;
+height: 100%;
+width: 100%;
+position: absolute;
+top: 0;
+left: 0;
+/* filter: blur(1px); */
+z-index: -1;
+}
+
+textarea {
+min-height: 190px;
+max-height: 291px;
+resize: vertical;
+font-size: 1em;
+}
+
+input, textarea {
+background-color: rgb(255, 255, 255);
+opacity: 0.98; 
+border: 1.5px solid black;
+border-radius: 1.5px;
+color: #010000;
+}
+
+#section1:has(h1:hover) {
+animation: moveIt 10s linear infinite;
+}
+
+#section2 {
+display: flex;
+flex-flow: column;
+align-items: center;
+justify-content: center;
+background-image: url(../public/home2.jpg);
+background-size: cover;
+height: 100vh; 
+margin: 0;
+min-height: 600px;
+overflow: hidden;
+position: relative;
+z-index: 0;
+}
+
+#section2::before {
+content: '';
+background-image: url(../public/home2.jpg);
+background-size: cover;
+height: 100%;
+width: 100%;
+position: absolute;
+top: 0;
+left: 0;
+/* filter: blur(5px); */
+z-index: -1;
+}
+
+#section2 form {
+justify-self: flex-start;
+}
+
+.error {
+width: 75vw;
+border: 2px solid red;
+}
+
+.errorUrl {
+width: 75vw;
+border: 2px solid red;
+position: relative;
+}
+
+.errorUrl::before {
+content: "Invalid URL";
+position: absolute;
+top: 100%;
+left: 50%;
+transform: translateX(-50%);
+background-color: red;
+color: white;
+padding: 5px;
+border-radius: 3px;
+font-size: 14px;
+white-space: nowrap;
+}
+
+label {
+font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+color: white;
+display: block;
+text-align: left;
+justify-self: center;
+width: 75vw;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+

@@ -82,6 +82,7 @@ def create_fake_news_model():
 max_len_text = 49
 tokenizer = Tokenizer()
 
+nltk.download('vader_lexicon')
 nltk.download('stopwords')
 nltk.download('punkt')
 stop_words = set(stopwords.words('english'))

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import RadarCharts from './components/RadarChart';
 import SimpleBarChart from './components/BarChartz';
 import './Results.css';
-import { Link } from 'react-router-dom';
 
 export default function Result() {
     const location = useLocation();
@@ -42,7 +41,7 @@ export default function Result() {
         if (score < 0.1) {
             score = 0.1;
         }
-        emotionsArray.push({ name: '-' + emotion, value: score.toFixed(2) });
+        emotionsArray.push({ name: ' ' + emotion, value: score.toFixed(2) });
     });
 
     console.log(emotionsArray);
@@ -149,9 +148,36 @@ export default function Result() {
                     ) : (
                         <div className="loading-spinner">.......Loading Model Data.......</div>
                     )}
-                    <Link to="/learn" className="learn-more-link">
-                        <span role="img" aria-label="Learn More">&#9432;</span>
-                    </Link>
+                    
+                    <span className="learn-more-link" role="img" aria-label="Learn More">&#9432;</span>
+                    <div class="info">
+                        <h2>Learn More</h2>
+                        <ul>
+                            <h4>Model Types</h4>
+                            <li>Long Short-Term Memory (LSTM): This is a type of recurrent neural network that solves the "vanishing gradient problem"
+                                : a challenge in training deep neural networks where the gradients become extremely small during backpropagation. This occurs when the activation functions saturate, causing gradients to approach zero as they propagate backward through the network. As a result, the network struggles to learn and update the weights effectively in the early layers, hindering deep models' ability to learn complex patterns. </li>
+                            
+                            <li>An Ensemble("together") Model is a machine learning model that combines the predicitions of multiple models to achieve better performance </li>
+                            
+                            
+                                
+                            {/* <li>An Ensemble Model is a machine learning model that combines the predictions of multiple models to achieve better performance.</li> */}
+                            {/* <br></br> */}
+
+                            <li>Our Models work best on Twitter tweets and are less reliable for other news sources. This is due to our training data sets.</li>
+                        </ul>
+                        <ul>
+
+                            <h4>Sentiment Types</h4>
+
+                            <li>Sentiment in text is a measure of different feelings present in the content. A higher value for a given feeling indicates stronger presence</li>
+                            <li>The Vader Score, Afinn Score, Pattern score and TextBlob Score are an overall sentiment indicator. They range from negative, neutral to positive.</li>
+                            <li>The Majority Voting result is the overall sentiment prediction obtained by combining all our measures of sentiment analysis</li>
+                            
+                        </ul>
+                    </div>
+                    
+                    
                 </div>
                 <div className='part3'>
                     <p>- Title -</p>

@@ -104,6 +104,25 @@ const Home = () => {
             setContent(storedContent);
         }
     }, [searchParams]);
+
+    useEffect(() => {
+        console.log("not null")
+        const handleBeforeUnload = (e) => {
+            e.preventDefault();
+            e.returnValue = '';
+            localStorage.removeItem('title');
+            localStorage.removeItem('content');
+            localStorage.removeItem('url');
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    
+    }, []);
+
     const scrollToLast = () => {
         window.scrollTo({
             top: 1500,

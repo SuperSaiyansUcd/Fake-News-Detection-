@@ -156,13 +156,6 @@ export default function Result() {
                             <h4>Model Types</h4>
                             <li>Long Short-Term Memory (LSTM): This is a type of recurrent neural network that solves the "vanishing gradient problem"
                                 : a challenge in training deep neural networks where the gradients become extremely small during backpropagation. This occurs when the activation functions saturate, causing gradients to approach zero as they propagate backward through the network. As a result, the network struggles to learn and update the weights effectively in the early layers, hindering deep models' ability to learn complex patterns. </li>
-                            
-                            <li>An Ensemble("together") Model is a machine learning model that combines the predicitions of multiple models to achieve better performance </li>
-                            
-                            
-                                
-                            {/* <li>An Ensemble Model is a machine learning model that combines the predictions of multiple models to achieve better performance.</li> */}
-                            {/* <br></br> */}
 
                             <li>Our Models work best on Twitter tweets and are less reliable for other news sources. This is due to our training data sets.</li>
                         </ul>

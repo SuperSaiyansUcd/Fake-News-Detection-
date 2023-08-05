@@ -54,10 +54,16 @@
   list-style-position:inside;
 }
 
-.learn-more-link:hover + .info{
+.learn-more-link:hover + .info, 
+.info:hover {
   visibility: visible;
   background-color: black;
 }
+
+.learn-more-link {
+  font-size: 2rem;
+}
+
 
 .resultPage .part3 p{
   text-align: left;

@@ -17,7 +17,7 @@ const LineSpectrum = ({ majorityVoting }) => {
       <div className="arrow" style={{ left: `${arrowPosition}%` }}>
         <div className="arrow-triangle"></div>
         <div className="arrow-rectangle"></div>
-        <div className="value">{majorityVoting}</div>
+        <div className="value">{majorityVoting} Sentiment</div>
       </div>
     </div>
   );

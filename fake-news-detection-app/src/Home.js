@@ -135,7 +135,7 @@ const Home = () => {
             <section id="section2" className="section">
                 <form onSubmit={toUrlResult}>
                     <div className="form-container">
-                        <label htmlFor="urlInput">P A S T E  -  U R L:</label>
+                        <label htmlFor="urlInput">P A S T E  -  U R L - BETA FEATURE </label>
                         <input
                             type="text"
                             id="urlInput"
@@ -180,7 +180,7 @@ const Home = () => {
                             className="button"
                             type="submit"
                             id="button1"
-                            value="Use LSTM Model"
+                            value="Submit"
                             title="Long short-term memory Machine Learning Model"
                         />
                         {/* <input

@@ -17,11 +17,10 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.layers import Input, Embedding, LSTM, Dense, concatenate, Bidirectional
 # sklearn is deprecated - use pip3 install scikit-learn
-from sklearn.metrics import  f1_score, precision_score, accuracy_score, recall_score
+# from sklearn.metrics import  f1_score, precision_score, accuracy_score, recall_score
 import requests
 from keras.models import Model
 from bs4 import BeautifulSoup, Comment
-from cleantext import clean
 
 def remove_comments(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -103,7 +102,6 @@ def submit_URL():
             title = title_tag.text.strip() if title_tag else "Title not found"
             data['title'] = title
 
-            # Scrape main text content
             body_text = remove_comments(soup.find('body').get_text())
             body_text = re.sub(r'\?.*$', '', body_text)
             main_text = body_text.strip() if body_text else "Text content not found"
@@ -193,11 +191,25 @@ def submit_data():
 
     num_pos = sum(score > 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
     num_neg = sum(score < 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
-    num_neutral = 4 - num_pos - num_neg
+    num_neutral = num_pos - num_neg
 
-    if num_pos > num_neg and num_pos > num_neutral:
+    emotion_sentiment_weights = {
+        'anger': -1,
+        'disgust': -1,
+        'fear': -1,
+        'joy': 1,
+        'neutral': 0,
+        'sadness': -1,
+        'surprise': 0
+    }
+
+    emotion_sentiment = sum(emotion_sentiment_weights[emotion] * score for emotion, score in emotions.items())
+    combined_score =  num_neutral + emotion_sentiment
+
+    # -1 for negatuve fights against the negative bias of news articles. Fine-tuned 
+    if combined_score > 0:
         majority_voting = "Positive"
-    elif num_neg > num_pos and num_neg > num_neutral:
+    elif combined_score < -1:
         majority_voting = "Negative"
     else:
         majority_voting = "Neutral"
@@ -219,17 +231,6 @@ def submit_data():
     print("recall:", recall)
     print("f1:", f1)
     print("accuracy:", accuracy)
-
-    num_pos = sum(score > 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
-    num_neg = sum(score < 0 for score in [afinn_score, pattern_score, vader_compound, textblob_score])
-    num_neutral = 4 - num_pos - num_neg
-
-    if num_pos > num_neg and num_pos > num_neutral:
-        majority_voting = "Positive"
-    elif num_neg > num_pos and num_neg > num_neutral:
-        majority_voting = "Negative"
-    else:
-        majority_voting = "Neutral"
 
     response = {
         'title': title,

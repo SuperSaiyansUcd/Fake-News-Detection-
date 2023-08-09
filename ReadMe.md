@@ -32,8 +32,3 @@
 
 ## Discussions
 [Discussions git](https://github.com/soggyfox/WIP_Temp/discussions )
-
-## Test Application
-http://fakenewsdetect.westeurope.cloudapp.azure.com:3000/
-(not available on UCD network due to network security configurations)
-(Will not be available when the Microsoft VM licence expires, which is around mid August)

@@ -1,4 +1,4 @@
-# Getting started with To Fake News Detection Chromium Extension
+# Getting started with "To Fake News Detection" Chromium Extension
 
 - Go to a random web page
 - Select the text which you want to identify whether its genuine or fake

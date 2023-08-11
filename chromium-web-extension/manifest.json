@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "To Fake News Detection",
+    "version": "1.0.0",
+    "description": "Sending selected text to the Fake News Detection website",
+    "permissions": [
+      "contextMenus"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    
+    "action": {
+      "default_icon": {
+        "16": "Icon2-192.png",
+        "128": "Icon2-512.png"
+      }
+     
+    },
+    "icons": {
+        "16": "Icon2-192.png",
+        "128": "Icon2-512.png"
+    }
+  }
+  
